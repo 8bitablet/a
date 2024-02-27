@@ -1,12 +1,18 @@
 /* asterisk = wildcard selector, and we reset initial values in `body` */
 /* resetting initial values might require reset/normalize.css instead */
+@font-face {
+    font-family: 'Fixedsys Excelsior 3.01';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Fixedsys Excelsior 3.01'), url('Fixedsys Excelsior 3.01.woff') format('woff');
+}
 * {
     background-color: #222222;
     color: white;
     text-decoration: none;
-    font-family: 'Devin Chavez Font', sans-serif;
+    font-family: 'Fixedsys Excelsior 3.01';
     font-style: normal;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 body {
@@ -14,30 +20,24 @@ body {
     background-color: #222222;
     color: white;
     text-decoration: none;
-    font-family: 'Devin Chavez Font', sans-serif;
+    font-family: 'Fixedsys Excelsior 3.01';
     font-style: normal;
-    font-size: 20px;
-}
-
-@font-face {
-    font-family: 'Devin Chavez Font';
-    font-style: normal;
-    font-weight: 400;
-    src: local('Devin Chavez Font'), url('devin-chavez-font.woff') format('woff');
+    font-size: 22px;
 }
 
 a { 
     white-space: pre-wrap;
-    font-family: 'Devin Chavez Font', sans-serif;
+    font-family: 'Fixedsys Excelsior 3.01';
     font-style: normal;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .preformat {
     white-space: pre-wrap;
-    font-family: 'Devin Chavez Font', sans-serif;
+    user-select: none;
+    font-family: 'Fixedsys Excelsior 3.01';
     font-style: normal;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .highlight-on-hover:hover {
@@ -51,19 +51,19 @@ div {
     white-space: pre-wrap;
     color: white;
     text-decoration: none;
-    font-family: 'Devin Chavez Font', sans-serif;
+    font-family: 'Fixedsys Excelsior 3.01';
     font-style: normal;
-    font-size: 20px;
+    font-size: 22px;
 }
 
-.no-select {
+.no-wrap {
     white-space: no-wrap; 
     user-select: none;
-    font-family: 'Devin Chavez Font', sans-serif;
+    font-family: 'Fixedsys Excelsior 3.01';
     font-style: normal;
-    font-size: 20px;
+    font-size: 22px;
 }
-.no-select * {
+.no-wrap * {
     white-space: inherit; 
     user-select: inherit;
     font-family: inherit;
@@ -74,9 +74,9 @@ div {
 .alt-text {
     white-space: pre-wrap;
     color: #FEFFBA; 
-    font-family: 'Devin Chavez Font', sans-serif;
+    font-family: 'Fixedsys Excelsior 3.01';
     font-style: normal;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 footer {
