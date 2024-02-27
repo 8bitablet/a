@@ -1,0 +1,104 @@
+<!-- page6 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>macro preprocessor</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css">
+</head><div class="preformat"><a style="font-family: 'Devin Chavez Font', sans-serif; font-style:normal; font-size: 20px">
+
+<div class="no-select" id="macro-anch">macro</div>
+<span class="alt-text">
+  #define b(n) (2 &lt;&lt; (n))
+  #define a(n) ((b(n))-1)</span>
+
+this macro shifts 2, to the left (n)bits, and subtracts 1.
+if you call b(3), it would be equivalent to 2 &lt;&lt; 3, resulting in 16
+if you call a(3), it would be equivalent to (2 &lt;&lt; 3) - 1
+resulting in 15, which is a binary number with three bits set to 1 (111 in binary)
+<span class="alt-text">
+  printf("b is %d\n", b(3));
+  printf("a is %d\n", a(3));</span>
+
+8 in binary = 1000
+4 in binary = 0100
+2 in binary = 0010
+1 in binary = 0001
+
+3 in binary is a combination of 1 and 2, yadayada... Instead if we start with 2
+and shift it over three places to the left, we have 100000, and 1 is in the 16th spot
+making it 16
+
+give these examples time to marinate, the Taj Mahal wasnt built
+in a day and neither was our memory and ability to grasp things
+
+<span class="alt-text">
+  #define MY_MACRO(ptr)  ((*ptr) * 2)</span>
+
+and you use it as follows:
+<span class="alt-text">
+  int array[5] = {1, 2, 3, 4, 5};
+  int *ptr = array;
+  int result = MY_MACRO(ptr);</span>
+
+during preprocessing, `MY_MACRO(ptr)` will be replaced with `((*ptr) * 2)`
+the `(*ptr)` is just a textual replacement that occurs before actual compilation
+
+
+these are variations of the backslash (\) character
+in which it cancels-out the proceeding character
+but in any other case an escape sequence is determined by the proceeding character e.g. "\n" newline
+<span class="alt-text">
+  char s1[] = "Ca\\ncel";
+  char s2[] = "Ca\134ncel";
+  char s3[] = "Ca\x5Cncel";</span>
+
+technically speaking, the backslash is an ID token that goes until it hits whitespace
+in which case it might have the effect of continuating a line (or removing the line break
+whichever way u prefer to see it) which may fall into the running logic of the rest of the code
+
+youll gain an interest in macros and the application of strings
+as your brain unlocks the harder-to-grok details
+
+<span class="alt-text">
+  #define QUOTE(seq) "\""#seq"\""
+
+  int main() {
+    printf("%s\n", QUOTE(sequence));
+  return 0;
+  }</span>
+
+preserves the " " air-quotes around sequence
+
+the __preprocessor__ also has specific ways in which it expands a variable
+such being, during the # hash operator
+
+
+the next example demonstrates an offset (youll remember we explained how
+structs use offsets to access members)
+note: on my machine 'size_t' is a 64 bit unsigned int
+<span class="alt-text">
+  #define offset(s,m) ((size_t) &amp; (((s*)0)-&gt;m))
+
+  struct s {
+    char *a;
+    int b;
+    size_t c;
+  };
+
+  int main() {
+    printf("a -- %zu\n", offset(struct s, a));
+    printf("b -- %zu\n", offset(struct s, b));
+    printf("c -- %zu\n", offset(struct s, c));
+    return 0;
+  }</span>
+
+`(*s)` dereferences the pointer to the structure.
+`(*s)-&gt;m` accesses the member `m` within the structure.
+`&amp;((*s)-&gt;m)` gets the address of the member within the structure.
+`(size_t) &amp;((*s)-&gt;m)` casts this address to `size_t`
+and then, from __main__ our macro, *offset(struct..* takes 2 arguments `struct s, x`
+</a>
+</div>
+</html>

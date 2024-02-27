@@ -1,0 +1,38 @@
+<title>NOR</title>
+
+first demonstrate computing an expression A'*B'+B*C:
+
+           A: -----.
+           B: ---. |
+           C: -. | |
+                 | | `-<o-|&&--.
+                 | }---<o-|&&  `-|OR
+                 | |          ,--|OR----A'*B'+B*C
+                 | `------|&&-'
+                 `--------|&&
+
+A′ represents the negation (NOT) of A.
+B′B′ represents the negation (NOT) of B.
+A′⋅B′A′⋅B′ represents the logical AND of the negation of A and the negation of B.
+B⋅CB⋅C represents the logical AND of B and C.
+The final result is the logical OR of A′⋅B′A′⋅B′ and B⋅CB⋅C
+
+
+simulate NOR behavior: (~) NOT'ing the result of (|) OR
+
+            A: -----.
+            B: ---. |
+                  | |
+                  | | `-<o-|OR--.
+                  | }---<o-|OR  `-|NOT
+                  | |      `------|NOT----A NOR B
+                  | `------|NOT
+                  `--------|OR
+
+NOT           OR              AND             XOR
+~0 = 1        0 | 0 = 0       0 & 0 = 0       0 ^ 0 = 0
+~1 = 0        0 | 1 = 1       0 & 1 = 0       0 ^ 1 = 1
+              1 | 0 = 1       1 & 0 = 0       1 ^ 0 = 1
+              1 | 1 = 1       1 & 1 = 1       1 ^ 1 = 0
+
+

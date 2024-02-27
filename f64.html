@@ -1,0 +1,55 @@
+<!-- floating point -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>f64</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css">
+</head><div class="preformat"><a style="font-family: 'Devin Chavez Font', sans-serif; font-style:normal; font-size: 20px">
+/*   1.024e3 <em>scientific notation example</em>
+Including the sign(+,-), these are the parts that
+comprise and describe a floating point number.
+A significant difference between decimal point and
+floating point is that floating points are binary,
+so these have, what's known as a binary point.
+
+Standard representation of this sometimes will show
+an address in <em>normalized scientific notation</em>,
+split into three parts where the most significant bit
+represents the sign, then 8 bits for the exponent and
+the remaining bits toward the <em>trailing significand</em>
+or rather, the mantissa with its leading 1 omitted.
+This address is normalized first after conversion to
+the form of a × 10^n. <b>0</b> takes the form of all zero's
+to clearly illustrate the use of zero.
+Now that's just the finite numbers but there's also inifinty
+and a special value called 'not a number'.
+For now this is enough to prime someone before using this
+type unconsciously */
+
+int main()
+{
+  int64_t x = 1024;
+  double fp = 4096.1234;
+
+  printf("int64 value : %d", x);
+  printf("64bit fp value : %f", fp);
+  printf("x and fp : %f", (x+fp));
+  return 0;
+}
+
+/*  use case of format specifiers and 64bit floating-point
+  w/ multiple varieties in a print statement */
+
+double a = 1234.56789;
+double b = 299792458;
+double c = 6.62607e-34;
+
+printf("Using %%f (fixed point): %f %f %f . \n", a, b, c);
+printf("Using %%e (force exponent): %e %e %e . \n", a, b, c);
+printf("Using %%g (best fit): %g %g %g . \n", a, b, c);
+
+</a>
+</div>
+</html>

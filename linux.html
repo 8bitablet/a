@@ -1,0 +1,46 @@
+<!-- linux operating system -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>intro to linux</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css">
+</head><div class="preformat"><a style="font-family: 'Devin Chavez Font', sans-serif; font-style:normal; font-size: 20px">
+
+&emsp;&emsp; Introduction to Linux &amp; Systems
+
+&emsp;&emsp;   /Dir/    = absolute directory
+&emsp;&emsp;   /Dir     = absolute filedirectory
+&emsp;&emsp;    Dir/    = relative directory
+&emsp;&emsp;    Dir     = relative filedirectory
+
+&emsp;&emsp; absolute just means it includes the full address of your dir back to root.
+&emsp;&emsp; relative traces from current working directory, i.e. parent or subdirectory.
+&emsp;&emsp; Bonus: everythings a file.
+
+&emsp;&emsp; Access Control (Permissions)
+
+&emsp;&emsp;       11          10           9
+&emsp;&emsp;        |           |           |
+&emsp;&emsp; 8  7   6     5  4  3    2  1   0
+&emsp;&emsp; r  w  x/s   r  w  x/s   r  w  x/t
+&emsp;&emsp;     U           G          O 
+
+&emsp;&emsp; The twelve bits are fitted into nine characters. There is also the character triplet
+&emsp;&emsp; represented as: User, Group, and Other. Each of these three ID's contain three types;
+&emsp;&emsp; read, write, and execute. Read can be '<b>r</b>' or '<b>-</b>' meaning no special permission.
+&emsp;&emsp; Write is '<b>w</b>' or '<b>-</b>' no special permission. And Execute is
+&emsp;&emsp; '<b>x</b>' execute or '<b>s</b>' both bits are set, '<b>-</b>',
+&emsp;&emsp; or '<b>t</b>' is the sticky bit, which gives the file owner permission.
+&emsp;&emsp; Note: The very first character not shown here is the advanced flag,
+&emsp;&emsp; represented as either '<b>d</b>' for directory or '<b>-</b>' for file.
+
+&emsp;&emsp; Permissions can be represented in a binary reference called decimal,
+&emsp;&emsp; where <b>r</b>=4, <b>w</b>=2, and <b>e</b>=1
+&emsp;&emsp; so with this algorithm you add them together
+&emsp;&emsp; to get each ID's permission you want to set.
+
+</a>
+</div>
+</html>

@@ -1,0 +1,123 @@
+<!-- page4 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>struct</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css">
+</head><div class="preformat"><a style="font-family: 'Devin Chavez Font', sans-serif; font-style:normal; font-size: 20px">
+
+<div class="no-select" id="struct-anch">struct</div>
+structures are a contiguous block of memory and
+the fields (members) are accessed using offsets
+<span class="alt-text">
+  |   x   |   y   |
+  ----------
+  |   10  |   20  |</span>
+
+x is at offset 0 within the struct
+y is at offset `sizeof(int)` bytes within the struct
+
+structs can store any data type and
+you can create them like this
+<span class="alt-text">
+  struct example {
+    int x;
+    int y;
+  };</span>
+
+using a struct within a function might look like
+<span class="alt-text">
+  void function(){
+    struct example newname;
+    struct example *something = &amp;newname;
+  }<span>
+
+you can then declare a variable (newname) in this case
+that points to x or y in the original struct, and same for
+(something), which it now equals the address of member
+
+anyway, when you see this `Object.Member, its referred to as a Member that is
+being accessed through the pointer to Object... you use the dot when there's
+direct access, and the (-&gt;) arrow operator when its indirect...
+`newname.x` could be declared w/ direct access
+`something-&gt;x` would have indirect access, seeing
+as its two levels away from `example`
+
+but lets not cram everything in at once
+lets go through this slowly
+
+you can declare a struct like this
+<span class="alt-text">
+  struct example newA;</span>
+
+you can also construct them as an anonymous structs w/ a tag
+<span class="alt-text">
+  struct {
+      int x;
+      int y;
+  } example;</span>
+
+using typedef to create an alias for the struct
+typedef struct example example;
+lets you declare w/ `example` as opposed to `struct example`
+i.e. it lets you create a type alias
+
+adding `typedef` is most typically done like this
+<span class="alt-text">
+  typedef struct {
+      int x;
+      int y;
+  } example;</span>
+
+and since youve already included `typedef`, you can omit the `struct` keyword
+in the declaration
+<span class="alt-text">
+  example newA;</span>
+
+`typedef` in a struct definition not only creates a type alias
+but also makes the struct name visible in a broader scope
+designated intializers provide a way of explicitly
+intitializing struct members
+<span class="alt-text">
+  typedef struct DeviceInfo {
+    int deviceID;
+    char description[50];
+  } DeviceInfo;
+
+  typedef struct {
+    int ex;
+  } ExtID;</span>
+
+ExtID can now be used as the type of a function
+or as the type in a parameter as well
+for now, like i said, lets try to keep things
+as simple as possible... we have two devices
+of type `DeviceInfo`, that have an id and description
+<span class="alt-text">
+  DeviceInfo device1 = {1, "Device 1"};
+  DeviceInfo device2 = {2, "Device 2"};</span>
+
+structID to access member id for demonstration
+through the access member, we can assign the
+to their respect devices
+<span class="alt-text">
+  ExtID A = {.ex = device1.deviceID};
+  ExtID B = {.ex = device2.deviceID};</span>
+
+Accessing and printing device information
+<span class="alt-text">
+  printf("Device A - ID: %d, Description: %s\n", A.ex, device1.description);
+  printf("Device B - ID: %d, Description: %s\n", B.ex, device2.description);</span>
+
+there's also unions which use less memory, however
+only one member of its allocated memory is used as it
+assigns one common storage space for all its members
+
+and an enum is for when you want to create, whats called
+"enumerated constants"
+
+</a>
+</div>
+</html>

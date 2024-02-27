@@ -1,0 +1,174 @@
+<!-- dram overview -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>dram</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css">
+</head><div class="preformat"><p style="font-family: 'Devin Chavez Font', sans-serif; font-style:normal; font-size: 20px">
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; Dynamic Random Access Memory
+
+&emsp;&emsp; <em>This is a brief summary describing dram, or a
+&emsp;&emsp; 1T1C memory cell, and its role during the aquisition
+&emsp;&emsp; of a 32 bits.
+&emsp;&emsp;&emsp;&emsp; We'll discuss how it reads, writes
+&emsp;&emsp;  and refreshes said address.</em>
+
+&emsp;&emsp;&emsp;    <em>NOTE: the angular position of this diagram
+&emsp;&emsp;&emsp;    should be 90 degrees rotated for the proper
+&emsp;&emsp;&emsp;    orientation and illustration</em>
+
+&emsp;&emsp;&emsp;                      wl
+&emsp;&emsp;&emsp;            -|-----.-------
+&emsp;&emsp;&emsp;             |     |
+&emsp;&emsp;&emsp;          bl |    _|_
+&emsp;&emsp;&emsp;             |___| T |____|
+&emsp;&emsp;&emsp;             |            |
+&emsp;&emsp;&emsp;             |          __|__
+&emsp;&emsp;&emsp;             |        c _____
+&emsp;&emsp;&emsp;                          |
+&emsp;&emsp;&emsp;                         _|_
+&emsp;&emsp;&emsp;                          -
+
+&emsp;&emsp;<em>1a</em>   <em>{bitline[row], transistor=1or0, wline[column], capacitor}</em>
+
+&emsp;&emsp;   [read][write][refresh]
+
+&emsp;&emsp; .dram= is a dual inline memory module. It is a physical hardware
+&emsp;&emsp; component with a viscious amount of cycles to maintain.
+&emsp;&emsp; Its purpose is to prefetch, move data before it is needed.
+&emsp;&emsp; It is connected to the cpu via channels along the motherboard
+&emsp;&emsp;  i.e. memory controller to physical channel.
+&emsp;&emsp;    Channel A    Channel B (two memory channels)
+&emsp;&emsp; They can accept 32 bits, divided into 4 integrated circuits,
+&emsp;&emsp; so they only read and write 8 of those bits at a time.
+&emsp;&emsp; Power goes through the motherboard to its power controller.
+
+&emsp;&emsp; During the Address Input process, the cpu send a 31 bit address.
+&emsp;&emsp;  ~3 of those bits go to the bank group.
+&emsp;&emsp;  ~2 go to the bank, and 16 to the row decoder.
+&emsp;&emsp;  The remaining 10 are for the column multiplexer.
+
+&emsp;&emsp; PAUSE!: <em>Remember, there's no such thing as an address,
+&emsp;&emsp; however what is real is a bit</em>
+
+&emsp;&emsp; The wordline comes first. It lies on the bottom layer,
+&emsp;&emsp; directly connected to the transistor and capacitor.
+&emsp;&emsp; Applying a voltage to the wordline turns on the transistor
+&emsp;&emsp; and channels to the bitline, but not always as in the case-
+&emsp;&emsp; (see below: <em>When a wordline is active</em>).
+&emsp;&emsp; This voltage is so, that a capacitor can retain a charge of 1
+&emsp;&emsp; or remain a 0, uncharged.
+&emsp;&emsp; When the wordline is off the transistor is off, thus the
+&emsp;&emsp; capacitor is uncharged.
+&emsp;&emsp; When a wordline is active, capacitors of that row are
+&emsp;&emsp; active as well. However the bitline remains inactive
+&emsp;&emsp; or else everything in every row and column would be active,
+&emsp;&emsp; which would defeat the purpose.
+
+&emsp;&emsp; It is this quilted-pattern cell made of metal-oxide (MOS),
+&emsp;&emsp; a metal-oxide semiconductor that makes this process so.
+&emsp;&emsp; The full term for the kind of transistor used is MOSFET.
+
+&emsp;&emsp; During the read process,
+&emsp;&emsp;  a 31 bit address is sent from cpu to dram.
+&emsp;&emsp;  ~5 bits select a specific bank.
+&emsp;&emsp; Next, all the wordlines must be turned off in that bank,
+&emsp;&emsp; to isolate capacitors and precharge ALL the bitlines to 0.5v.
+&emsp;&emsp; Next, the 16 bit row address turns on a row and then all of
+&emsp;&emsp; the capacitors in that row are connected to their bitline.
+
+&emsp;&emsp; If an individual capacitor holds a 1 ~ charged to 1.0v,
+&emsp;&emsp; then some charge flows from the capacitor to these
+&emsp;&emsp; 0.5v bitlines, and the voltage on the bitline increases.
+&emsp;&emsp; The sense amplifier then detects the slight change on the
+&emsp;&emsp; bitline and amplifies it by pushing the voltage on the bitline
+&emsp;&emsp; up to 1.0v.
+&emsp;&emsp; However if a 0 is stored in the capacitor, charge flows from
+&emsp;&emsp; the bitline into the capacitor, and the 0.5v bitline decreases.
+&emsp;&emsp; The sense amplifier then detects this change, amplifies it,
+&emsp;&emsp; and drives the bitline voltage down to 0 volts (or ground).
+
+&emsp;&emsp; Now the bitlines are 1 or 0 volts corresponding to the
+&emsp;&emsp; stored charge of the capacitors in the active row!
+&emsp;&emsp; The state of this row is considered to be 'open'.
+
+&emsp;&emsp; During the write process,
+&emsp;&emsp;  {write command} {address} {8 bits to be written}~
+&emsp;&emsp;  are sent from the cpu to dram.
+&emsp;&emsp; And like before the bank is selected, the capacitors are
+&emsp;&emsp; isolated, and the bitlines are precharged to 0.5v.
+&emsp;&emsp;  Using a 16 bit address, a single row is activated.
+&emsp;&emsp; The capacitors perturb the bitline,
+&emsp;&emsp;  and the sense amplifier detects this,
+&emsp;&emsp; driving the bitlines to a 1 or 0 (thus opening the row).
+
+&emsp;&emsp; Next, the column address goes to the column multiplexer.
+&emsp;&emsp; Because the write command was sent, the multiplexer connects
+&emsp;&emsp; the specific 8 bitines to the write driver, which contains
+&emsp;&emsp; the 8 bits the cpu had sent along the data wires and
+&emsp;&emsp; requested to write.
+&emsp;&emsp; These drivers will override whatever was previously
+&emsp;&emsp; happening on said bitlines ~ driving each of the 8 bitlines
+&emsp;&emsp; to 1.0v for 1, or 0 volts for 0.
+
+&emsp;&emsp; This new bitline voltage overrides the previously stored
+&emsp;&emsp; charges in each of the 8 capacitors in the open row,
+&emsp;&emsp; thereby writing 8 bits of data to the memory cells
+&emsp;&emsp; corresponding to the 31 bit address.
+&emsp;&emsp; Note that writing and reading happens concurrently.
+
+&emsp;&emsp; During the refresh process,
+&emsp;&emsp;  all the rows are sequentially closed,
+&emsp;&emsp; the bitlines are precharged to 0.5v,
+&emsp;&emsp;  and a row is 'opened'.
+
+&emsp;&emsp; For this, again, the capacitors perturb the bitlines
+&emsp;&emsp; and the sense amplifiers drive the bitlines and capacitors
+&emsp;&emsp; to an 'open' row, 1.0v (or down to 0 depending on the stored
+&emsp;&emsp; value of the capacitor).
+&emsp;&emsp; This process of row close, pre-charging, opening and sense ampliying
+&emsp;&emsp; happens row after row until ALL of the rows are refreshed.
+
+&emsp;&emsp; When the cpu sends a read or write command to a row that is
+&emsp;&emsp; already open it's called a 'page hit'.
+&emsp;&emsp; This can happen over and over. A page hit skips all of the
+&emsp;&emsp; steps required to open a row, and just uses the 10 bit
+&emsp;&emsp; column address to multiplex a different set of 8 columns
+&emsp;&emsp; aka bitlines. This connects them back to the read or write
+&emsp;&emsp; driver thereby saving alot of time!
+&emsp;&emsp; A 'row miss' is when the next address is for a different row
+&emsp;&emsp; which results in the dram closing and isolating the
+&emsp;&emsp; currently open row, and opening a new row.
+
+&emsp;&emsp; Lastly, there's a couple other optimizations native to dram.
+&emsp;&emsp; By having multiple bank groups the cpu can refresh one bank
+&emsp;&emsp; in each bank group at a time, while utilizing the other three.
+&emsp;&emsp; This reduces the overall impact of refreshing.
+
+&emsp;&emsp; For a 'burst buffer', 128 wires connect to
+&emsp;&emsp; 128 bit buffer locations.
+&emsp;&emsp;  ~10 bit column address becomes two different parts.
+&emsp;&emsp;   ~6 bits used for the multiplexer.
+&emsp;&emsp;    ~4 bits for the burst buffer.
+&emsp;&emsp; [for a read command]~128 memory cells, bitlines,
+&emsp;&emsp; are connected to the burst buffer using the 6 column bits,
+&emsp;&emsp; thereby temporarily loading or caching 128 values into the
+&emsp;&emsp; burst buffer.
+&emsp;&emsp; Using the 4 bits for the buffer, 8 data locations in the
+&emsp;&emsp; burst buffer are connected to the read drivers, and the
+&emsp;&emsp; data is sent to the cpu.
+
+&emsp;&emsp; By cycling through these 4 bits, all 16 sets of 8 bits are
+&emsp;&emsp; read out, and thus the burst length is 16.
+&emsp;&emsp; A new set of 128 bitlines are connected and loaded into the
+&emsp;&emsp; burst buffer.
+
+&emsp;&emsp; For the sense amplifier's design optimization
+&emsp;&emsp;  (see; <em>cross coupled inverter</em>)
+
+</p> 
+</div>
+</html>

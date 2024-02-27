@@ -1,0 +1,89 @@
+/* asterisk = wildcard selector, and we reset initial values in `body` */
+/* resetting initial values might require reset/normalize.css instead */
+* {
+    background-color: #222222;
+    color: white;
+    text-decoration: none;
+    font-family: 'Devin Chavez Font', sans-serif;
+    font-style: normal;
+    font-size: 20px;
+}
+
+body {
+    all: initial;
+    background-color: #222222;
+    color: white;
+    text-decoration: none;
+    font-family: 'Devin Chavez Font', sans-serif;
+    font-style: normal;
+    font-size: 20px;
+}
+
+@font-face {
+    font-family: 'Devin Chavez Font';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Devin Chavez Font'), url('devin-chavez-font.woff') format('woff');
+}
+
+a { 
+    white-space: pre-wrap;
+    font-family: 'Devin Chavez Font', sans-serif;
+    font-style: normal;
+    font-size: 20px;
+}
+
+.preformat {
+    white-space: pre-wrap;
+    font-family: 'Devin Chavez Font', sans-serif;
+    font-style: normal;
+    font-size: 20px;
+}
+
+.highlight-on-hover:hover {
+    background-color: yellow;
+    color: black;
+    cursor: pointer;
+}
+
+/* Global link styles */
+div {
+    white-space: pre-wrap;
+    color: white;
+    text-decoration: none;
+    font-family: 'Devin Chavez Font', sans-serif;
+    font-style: normal;
+    font-size: 20px;
+}
+
+.no-select {
+    white-space: no-wrap; 
+    user-select: none;
+    font-family: 'Devin Chavez Font', sans-serif;
+    font-style: normal;
+    font-size: 20px;
+}
+.no-select * {
+    white-space: inherit; 
+    user-select: inherit;
+    font-family: inherit;
+    font-style: inherit;
+    font-size: inherit;
+}
+
+.alt-text {
+    white-space: pre-wrap;
+    color: #FEFFBA; 
+    font-family: 'Devin Chavez Font', sans-serif;
+    font-style: normal;
+    font-size: 20px;
+}
+
+footer {
+    background-color: #222222;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

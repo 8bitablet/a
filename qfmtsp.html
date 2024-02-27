@@ -1,0 +1,49 @@
+<!-- page1 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>type</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css">
+</head><div class="preformat"><a style="font-family: 'Devin Chavez Font', sans-serif; font-style:normal; font-size: 20px">
+
+<div class="no-select" id="fmt-anch">format specifier</div>
+this example demonstrates the more common data types
+available, as well as which format specifier to use
+they are to infer what type of data should be printed
+or scanned in input and output operations... ...
+(we'll go over what all of that means as we progress)
+<span class="alt-text">
+  int main() {  
+    printf("query format specifiers\n");
+    printf("%d | i (signed integer)\n");
+    printf("%u (unsigned integer)\n");
+    printf("%o (unsigned octal)\n");
+    printf("%x (unsigned hexadecimal)\n");
+    printf("%f (decimal floating point)\n");
+    printf("%e (scientific notation)\n");
+    printf("%a (hexadecimal floating point)\n");
+    printf("%c (character)\n");
+    printf("%s (string of characters)\n");
+    printf("%p (pointer address)\n");
+
+    return 0;
+  }</span>
+
+<div class="no-select" id="storage-class-anch">storage class specifier</div>
+`static` is used to specify the storage duration (lifetime) and linkage (visibility) of a variable
+when used as a local variable within a function, it makes the variable retain its value
+between function calls and gives it internal linkage
+when used w/ a global variable or function, it gives said variable internal linkage, which means
+the variable is visible only within the same translation unit (the same source file)
+`extern` is used to declare a variable or function that is defined in another file or translation unit
+it specifies that the variable or function has external linkage (visible across multiple translation units)
+
+<div class="no-select" id="type-qualifier-anch">type qualifier</div>
+`const` it is used to specify that a variable's value cannot be modified after initialization
+consider it also a form of documentation and a contract with the caller that a function shouldnt
+attempt to modify the provided variable, i.e. its a constant (in one way or another)
+</a>
+</div>
+</html>

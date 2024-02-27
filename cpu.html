@@ -1,0 +1,123 @@
+<!-- cpu overview -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>cpu</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css">
+</head><div class="preformat"><p style="font-family: 'Devin Chavez Font', sans-serif; font-style:normal; font-size: 20px">
+
+<em>The following is a very rough, compact description of
+how i view the internals of the cpu, starting with
+'dram' and then everything from the cpu's perspective.
+This is what i have come to understand <b>so far</b>
+and should in no way be taken as a total understanding.
+It is not my intention to supply such an explanation.
+It is however an attempt to summarize things simply
+and portray the significance of understanding
+everything from the perspective of memory cells
+and logic gates.
+Keep in mind, this is only a basic description of a processor
+even still everything is just tiny wires, capacitors and
+transistors carrying an electrical charge; We'll explain
+further as to what that means.</em>
+
+Logic Gate Primer:
+       AND  OR  XOR  NOT  NAND
+
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; "cpu.register>>dram"
+
+("<em>a summary on dram</em>"): Part 1 <a href="dram">How</a> <a href="dram">dram?</a>
+
+Part 2 How computer = cpu.register>>dram?
+[fetch][decode][execute]
+
+Storage in dram is volatile. But dram is intimately connected w/ the cpu
+and its ability to calculate as well as in determining which instruction to perform.
+And this cpu.register>>dram relationship has an affinite connection with the rest of
+the computer/hardware, or 'device drivers'; in terms of this loop,
+ <em>cpu -> to a storage device -> and back to cpu.register>>dram</em>.
+So coupled w/ the real-time clock, used to keep counting, in conjuction with the
+low standby power CMOS Static RAM, ssd/hdd retain a small level of voltage/or charge
+to keep memory persistent. In conclusion its safe, but not recommended to unplug
+storage drives and keep it unhoused from its host netgate.
+
+register = (a simple register) in cell terms is a group of flip-flop circuits
+that store 1 or 0. There are many different kinds of registers, but this one
+is for storing a binary word, and one flip-flop is needed for each bit in the word.
+What are the internals of a flip-flop?!__!
+
+A register in physicality is itself a storage element for addresses.
+During the fetch phase, it is meant to retrieve an instruction from dram.
+The Address register is wired into dram. dram interprets that as a value and then
+sends back the associated address to the Instruction register. Next, opcode,
+or the first 4 bits of the address corresponds to Load-A instruction.
+The other bits of the address correspond to a dram address.
+Next, instructions are decoded and interpreted by the Control Unit.
+
+controlunit= (a handful of logic gates) it recognizes Load-A instruction circuit
+by matching the opcodes 4 bit address. The physical circuit layout IS the match.
+In other words, each transistor will output the opcode correctly or not.
+Which leads to the execute phase. The output of that Load-A checking instruction
+turns on dram's read/enable line and sends the remaining bits of the dram address.
+dram retrieves the value at that address. Because it stems from a Load-A instruction,
+the value has to be stored in register A, (none of the other registers).
+When dram's data wires are wired to 4 data registers, the Load-A match circuit turns
+on the write/enable of only register A. For the next instruction, everything is
+turned off. The Address register is then incremented by 1 bit,
+and we do the entire process again.
+Again Control Unit is responsible for selecting the right registers to pass in as
+inputs and to configure the ALU to perform the right operation.
+So for example, the Control Unit enables register B and feeds its value into the
+first input of the ALU. It also enables register A and feeds that into the second
+input of the ALU.
+The 'add' instruction determined by the opcode, is a 2 bit address. The add opcode
+is passed into the ALU. The output will be saved to register A. For this,
+the Control Unit uses an internal register of its own to temporarily save the output,
+turn off the ALU and then write the value into the proper register.
+Then we begin again, incrementing the Address register by 1 bit.
+It goes through the usual fetch and decode. The address is then passed to dram
+but this time its a 'STORE' instruction. So instead of read-enabling, it write-enables.
+At the same time it read-enables register A. This opens the data line to
+pass in the value stored in from register A.
+
+clock = triggers an electrical signal within specific intervals.
+it advances the operation of the cpu, corresponding with specific registers.
+What are the internals of TODO!__!
+[<em>Describe a pulse transition detector here</em>]
+
+mmu = is a memory unit responsible for mapping addresses to ram.
+It keeps track of shifts between virtual and physical addresses.
+
+cache = a storage element. it is sram, by which it does not have
+a refresh step. It finds application in the correspondence of main memory blocks
+and those in the cache. This is specified by the specific mapping instruction.
+Cache internally is also a group of flip-flop gates.
+
+<em>CRTC and plane in linux</em>
+<em>see also CVT, Coordinated Video Timing</em>
+
+framebuffer = a portion of dram containing a bitmap that drives a video display,
+a buffer being a region of memory used to store data. There are many different
+kinds of buffers. A framebuffer in particular represents all the pixels in a frame.
+The implementation of a pixel comes out of the cpu, which depends on the monitors
+specifications. To setup a pixel internally, 8 bits are sent to the display controller.
+That display controller turns these bits into an analog voltage level
+(according to the monitor specifications).
+A voltage level is produced, advancing pixel by a specific amount.
+1 pixel is represented for red, green and blue. So that means you send (3) sets of 8 bits
+Each row of the screen will need 1920 pixels and each column 1080 pixels.
+This grid is considered the 'display'. For each pixel sends (3x) 8 bits of data to feed the
+image to the screen. 1920 * 1080 * 3 bytes (or 24 bits)
+= 6220800 bytes (or 5.93 megabytes)
+The screen refreshes (60x) per sec. That means it sends the display 1 new frame of 6 mb
+(of your picture) (60x) per sec.
+360 mb of bits per sec.
+There's also the intensity of a pixel which can be described by an incremental circuit
+of some sort. For color you can make a function normalizing the 3 bit channel definition,
+or 4 because you want alpha channel.
+Again this process comes in and out of the cpu, however the gpu has its own framebuffer.
+</p> 
+</div>
+</html>

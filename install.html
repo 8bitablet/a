@@ -1,0 +1,183 @@
+<!-- linux installation -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>install instructions</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css">
+</head><div class="preformat"><p style="font-family: 'Devin Chavez Font', sans-serif; font-style:normal; font-size: 20px">
+&emsp;&emsp; <em>There are many many distributions of linux.
+&emsp;&emsp; Once you know which you'd like to install you should
+&emsp;&emsp; go about finding that distro's installation page.
+&emsp;&emsp; You can also take these instructions as a solid
+&emsp;&emsp; foundation on what you need to do.</em>
+
+&emsp;&emsp; Artix Install w/ runit <em>(however
+&emsp;&emsp;    OpenRC, s6, or dinit are potentially easier)</em>
+
+&emsp;&emsp; : Instructions:
+&emsp;&emsp; : [#]=optionals
+&emsp;&emsp; : Helpful Shortcuts:
+&emsp;&emsp; : <b>Shift+zz</b>=save file
+&emsp;&emsp; : Switch <b>Esc</b> and <b>Caps lock</b>
+
+&emsp;&emsp; See ArtixLinux.org for more information, e.g.
+&emsp;&emsp; https://wiki.artixlinux.org/Main/runit
+&emsp;&emsp; https://wiki.artixlinux.org/Main/Installation
+&emsp;&emsp; **Legacy Tree Example
+&emsp;&emsp; sda disk solid state drive e.g
+&emsp;&emsp;  --sda1 /boot
+&emsp;&emsp;  --sda2 /part2
+&emsp;&emsp;  --sda3 /
+&emsp;&emsp; sdb disk hard drive e.g.
+&emsp;&emsp;  --sdb1 /example
+&emsp;&emsp;  --sdb2 /part2
+&emsp;&emsp; sdc disk flash drive e.g
+&emsp;&emsp;  --sdc1 /open
+&emsp;&emsp;  --sdc2 /encrypted
+
+&emsp;&emsp; burn iso as 'dd' <em>to enable for use in linux filesystems</em>
+&emsp;&emsp; file system: fat32
+&emsp;&emsp; plug-in devices before reboot,installation
+
+&emsp;&emsp; Once computers on,
+&emsp;&emsp; Press the “Del”
+&emsp;&emsp; or “F1” , “Esc”
+&emsp;&emsp;    or “F10”, “F2” or “F12”
+&emsp;&emsp; to open the BIOS. Press,
+&emsp;&emsp; “Alt” and “F1” for hidden settings.
+&emsp;&emsp; select the "usb" boot option in BIOS
+
+&emsp;&emsp; // NOTE: Make sure there's no issues with any files you need
+&emsp;&emsp; // as well as Wifi/router access
+&emsp;&emsp; // Keyboard config will persist
+&emsp;&emsp; // worry about Bluetooth, Sound, etc. at the end.
+&emsp;&emsp; // If you need to re-discover and chroot into
+&emsp;&emsp; // an existing filesystem, <a href="troubleshoot">this</a> <a href="troubleshoot">page</a>
+
+&emsp;&emsp; Artix-runit
+&emsp;&emsp; disk label default: gpt
+&emsp;&emsp; root:root,pass:artix
+&#8595;
+<style>
+hr.dotted {
+  border-top: 3px dotted #bbb;
+}
+</style>
+<hr class="dotted">
+&emsp;&emsp; **Commands:
+&emsp;&emsp; <b>ls</b> is the list command
+&emsp;&emsp; <b>dd if=artix-base-runit-20220713-x86_64.iso of=/dev/sdc status='progress'</b> reads ~ writes artix-base.iso to device
+&emsp;&emsp; (#optional, if already installed)
+
+&emsp;&emsp; <b>lsblk</b> will list your partitions
+&emsp;&emsp; (partition drives, for example if you're making (3) partitions)
+&emsp;&emsp; <b>fdisk /dev/sda</b>
+&emsp;&emsp; <b>p</b> list partitions shortcut
+&emsp;&emsp; <b>d</b> delete 3 OPTIONAL
+&emsp;&emsp; <b>d</b> delete 2 OPTIONAL
+&emsp;&emsp; <b>d</b> delete 1 OPTIONAL
+&emsp;&emsp; <b>n</b> new partition [Enter] [Enter] [+1GB] [y]
+&emsp;&emsp; ("continue")
+&emsp;&emsp; <b>p</b>
+&emsp;&emsp; <b>n</b> new partition [Enter] [Enter] [+30GB] [y]
+&emsp;&emsp; ("continue")
+&emsp;&emsp; <b>p</b>
+&emsp;&emsp; <b>n</b> new partition [Enter] [Enter] [Enter] [y]
+&emsp;&emsp; ("continue")
+&emsp;&emsp; <b>p</b>
+&emsp;&emsp; <b>w</b> write/leaves fdisk
+&emsp;&emsp; (exit)
+&emsp;&emsp; <b>lsblk</b>
+&emsp;&emsp; <b>mkfs.ext4 /dev/sda3</b>
+&emsp;&emsp; ("Something finished")
+&emsp;&emsp; <b>mkfs.ext4 /dev/sda2</b>
+&emsp;&emsp; ("Something finished")
+&emsp;&emsp; <b>mkfs.ext4 /dev/sda1</b>
+&emsp;&emsp; ("Something finished")
+&emsp;&emsp; <b>lsblk</b>
+&emsp;&emsp; You can name these however you want
+&emsp;&emsp; <b>mount /dev/sda3 /mnt</b> this would be your root partition
+&emsp;&emsp; <b>mkdir /mnt/part2</b>
+&emsp;&emsp; <b>mkdir /mnt/boot</b>
+&emsp;&emsp; <b>mount /dev/sda1 /mnt/boot</b>
+&emsp;&emsp; <b>mount /dev/sda2 /mnt/part2</b></p>
+
+&emsp;&emsp; <em>NOTE: You do not always receive a confirmation after using a command.
+&emsp;&emsp; Try --help for available options, as --debug  or  -v --verbose results is often implemented</em></p>
+
+&emsp;&emsp; *Network:
+&emsp;&emsp; <b>pacman -S networkmanager networkmanager-runit</b> [y]
+&emsp;&emsp; ("Something finished")
+&emsp;&emsp; <b>ln -s /etc/runit/sv</b> list auto-startups
+&emsp;&emsp; <b>ln -s /etc/runit/sv/NetworkManager/ /run/runit/service</b> normal start #optional
+&emsp;&emsp; (should fail)
+&emsp;&emsp; <b>ln -s /etc/runit/sv/NetworkManager/ /etc/runit/runsvdir/current</b> auto-start NetworkManager
+&emsp;&emsp; <b>rfkill unblock wifi</b>
+&emsp;&emsp; <b>ip link set `interface` up</b> replace interface with wireless network e.g. wlan0
+&emsp;&emsp; (see, "nmcli" or "connmanctl" to join your network)
+&emsp;&emsp; <em>One of these should work</em>
+&emsp;&emsp; <b>dmesg | grep firmware</b> check for firmware being loaded
+&emsp;&emsp; <b>dmesg | grep iwlwifi</b> to identify any issues #optional,
+&emsp;&emsp; see; Installing driver/firmware https://wiki.archlinux.org/title/Network_configuration/Wireless
+&emsp;&emsp; or Dynamic_Kernel_Module_Support
+&emsp;&emsp; <b>ping 24.105.62.129 -c 4</b>
+&emsp;&emsp; <b>ip addr show</b> find your ip address
+
+&emsp;&emsp; *Basestrap+configuration:
+&emsp;&emsp; <b>basestrap /mnt base base-devel runit elogind-runit linux linux-firmware vim</b>
+&emsp;&emsp; ("Something finished")
+
+&emsp;&emsp; <b>fstabgen -U /mnt >> /mnt/etc/fstab</b>
+&emsp;&emsp; <b>blkid ext4 /dev/sdb1 >> /etc/fstab</b>*example* is useful to append the UUID of a drive to your fstab
+
+&emsp;&emsp; <b>artix-chroot /mnt</b>
+&emsp;&emsp; For more on <b>chroot</b>, look at <a href="troubleshoot">this</a> <a href="troubleshoot">page</a>
+&emsp;&emsp; (shell)bash
+&emsp;&emsp; <b>vim /etc/pacman.d/mirrorlist</b>
+&emsp;&emsp; prioritize top,to bottom... ... e.g. Server = https://us-mirror.artixlinux.org/$repo/os/$arch
+&emsp;&emsp; <b>ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime</b>
+&emsp;&emsp; <b>ls -l /etc/localtime</b> list view, localtime
+&emsp;&emsp; <b>hwclock --systohc</b> system go to computers time
+
+&emsp;&emsp; <b>vim /etc/locale.gen</b> list localizations language
+&emsp;&emsp; en_US.UTF-8 UTF-8 en_US ISO-8859-1 (save file)
+&emsp;&emsp; <b>locale-gen</b> generate locals
+&emsp;&emsp; <b>vim /etc/locale.conf</b> new file
+&emsp;&emsp; LANG=en_US.UTF-8 (save file)
+
+&emsp;&emsp; <b>vim /etc/hostname</b> new file
+&emsp;&emsp; (save file)
+
+&emsp;&emsp; <b>vim /etc/hosts</b>
+&emsp;&emsp; ~
+&emsp;&emsp; ~
+&emsp;&emsp; 127.0.0.1 localhost
+&emsp;&emsp; ::1 localhost
+&emsp;&emsp; 127.0.0.1 exComp.localdomain exComp
+&emsp;&emsp; <em>exComp replace w/ your own ComputerName</em>
+&emsp;&emsp; (save file)
+&emsp;&emsp; <b>pacman -S grub</b>
+&emsp;&emsp; ("Something finished")
+&emsp;&emsp; <b>grub-install --target=i386-pc /dev/sdc</b> for target grub install
+&emsp;&emsp; <b>grub-mkconfig -o /boot/grub/grub.cfg</b> grub configuration file
+&emsp;&emsp; <b>passwd</b>
+&emsp;&emsp; New password: EXAMPLE
+
+&emsp;&emsp; <em>lookup the unix/bash commands and how to sync packages using <b>pacman</b>.
+&emsp;&emsp; You'll probably also want the X windowing system as well as some inclination of a gpu driver.
+&emsp;&emsp; Beyond that, i recommend <b>dwm</b> as its a decent window manager among dozens.
+&emsp;&emsp; <b>&lt;Key&gt;</b>Ctrl+C or ^C control sequence which sends a SIGINT to all processes.
+&emsp;&emsp; <b>&lt;Key&gt;</b>Ctrl+Alt+Fn+2 new tty session.
+&emsp;&emsp; <b>killall -u usersname</b> should be useful when frozen or stuck.
+&emsp;&emsp; <b>ls -lap | more</b> its worth learning how to use 'more' and 'less' commands for viewing by pages.
+&emsp;&emsp; <b>useradd -m newuser</b> is imperative to make a regular user account and, <b>passwd newuser</b>.
+&emsp;&emsp; <b>jobs</b> lists all the jobs still running, <b>fg</b> to resume a job.
+&emsp;&emsp; <b>sudo</b> may also be worth configuring on your system.</em>
+
+&emsp;&emsp; Welcome to Linux!YAY!
+</p> 
+</div>
+</html>
+

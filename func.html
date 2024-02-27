@@ -1,0 +1,155 @@
+<!-- page2 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>func</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css">
+</head><div class="no-select" style="font-family: 'Devin Chavez Font', sans-serif; font-style:normal; font-size: 20px">
+
+<div id="data-anch">data type</div>
+char type is considered a small integer type
+its typically used to represent characters
+however those characters have to be stored as integer values
+(thus, small integer type)
+
+<div id="void-anch">void pointer</div>
+they can point to objects of any data type
+"void" btw just means "no return type"
+where as int functions must include a return type
+
+<div id="variadic-anch">variadic function</div>
+since we use `printf` to see the results of everything
+we should understand what kind of function it is
+its a special function that takes a variable amount of arguments,
+that is, they are presented with an ellipsis "..." within a given function's parameters
+<span class="alt-text">
+  int printf(const char *format, ...)</span>
+
+this is the definition provided by the standard lib header, so linking w/
+`#include &lt;stdio.h&gt;`
+lets you use `printf`. keep in mind, you include C library headers w/ &lt;file.h&gt;
+and user-defined headers w/ "file.h"
+<span class="alt-text">
+  printf("Example text %d, %d, %d\n", var1, var2, var3);</span>
+
+So here we are demonstrating what both a
+function declaration is, and how `printf` works.
+Because its a variadic function, it could conceivably take an inifinite amount of variables
+... simply put, the first part ("in quotation marks") will accept your
+personalized text as well as format specifiers.
+these format specifiers align with each proceeding variable (found after the comma)
+`printf` in particular is used for printing formatted output to the screen, hence print -f(formatted)
+
+lets get back to the specifics of a function
+functions bring a specific set of instructions depending on how you define them...
+to see how they pertain to their assembly counterpart, see page10
+
+lets say you create a function prototype
+that is, you want to tell the program that
+theres a function defined somewhere
+and you want to call it
+<span class="alt-text">
+  void func(int x);</span>
+
+it would have to find this function defined within the program
+<span class="alt-text">
+  void func(int x) {
+  }</span>
+
+one notable feature related to a function is the ability to
+capture the internal instructions of a function
+
+/* IMPORTANT */
+since this is our first example, you should remember that
+all program instructions are called out from `int main` first,
+and then proceed to the rest of the program
+<span class="alt-text">
+  int func(int a,int b) {
+    int c = a+b;
+  }
+
+  int main() {
+    int a2 = 2;
+    int b2 = 3;
+    int internfunc = func(a2, b2);
+    printf("internfunc is %d\n", internfunc);
+    return 0;
+  }</span>
+
+we explicitly declared new variables in `main` to show
+`internfunc` could have the same arguments as func and we
+could rename/reassign those parameters as well
+
+
+<div id="function-pointer-anch">function pointer</div>
+first create the function
+<span class="alt-text">
+  void Function(int param) {
+  }</span>
+
+declare a function pointer
+<span class="alt-text">
+  void (*pointerToFunction)(int);</span>
+
+assign the function pointer
+to point to the function's address
+(capture its internal instructions)
+<span class="alt-text">
+  pointerToFunction = &amp;Function;</span>
+
+now its equal to some original function we had
+in this example you dont even need to include braces,
+but you should note that you dont include void anyway
+when you call a void function from within another function
+
+however function origins that do not have parameters should
+be filled out with void i.e. `func(void) {}`
+
+last but not least, you can call the function through the function pointer,
+and assign a value to its parameter
+<span class="alt-text">
+  pointerToFunction(42);</span>
+
+here's the next example
+<span class="alt-text">
+  void ThisFunction(void (*NewParam)(int));</span>
+
+you might also call this the function pointer's signature
+it would have to find this function defined within the
+program
+<span class="alt-text">
+  void ThisFunction(void (*NewParam)(int)) {
+  }</span>
+
+continuing on, heres a function that matches its signature
+<span class="alt-text">
+  void SomeNewFunction(int Param) {
+  }</span>
+
+you can call it now since it shares the same signature
+<span class="alt-text">
+  ThisFunction(&amp;SomeNewFunction);</span>
+
+note: keep in mind, im just cycling through everything thats possible with functions,
+and once you understand function pointers and matching signatures,
+rest assured everything else will be a cakewalk
+
+you can also have a function thats of `struct` type such as this constructor function
+<span class="alt-text">
+  struct unboundedint {
+  };
+
+  struct unboundedint constructor(int num_blocks) {
+    struct unboundedint result;
+  }<span>
+
+/* `memcpy` example see page7 */
+/* `malloc` example, see page8 */
+
+/* `struct` example, see page4 */
+
+</a>
+</div>
+</html>

@@ -1,0 +1,48 @@
+<!-- chroot/troubleshoot -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>chroot</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css">
+</head><div class="preformat"><a style="font-family: 'Devin Chavez Font', sans-serif; font-style:normal; font-size: 20px">
+<em>Make sure you are getting the latest iso from your distro's
+webpage and write down the version# for any time you have to
+use your bootable usb as a medium. That way you know if your
+version is up to date or not.</em>
+
+Re-discover an existing filesystem
+This example uses a 4 partitioned drive,
+and 2 on a storage drive:
+<b>lsblk -f</b>
+<em>mount the root partition first - what holds the root filesystem,
+then do the rest.</em>
+
+<b>mount /dev/sda4 /mnt</b>
+<b>mount /dev/sda2 /mnt/part2</b>
+<b>mount /dev/sda3 /mnt/part3</b>
+<b>mount /dev/sdb1 /mnt/example</b>
+<b>mount /dev/sdb2 /mnt/part2</b>
+<em>access files will be in /mnt</em>
+
+*Chroot into mounted system
+<b>artix-chroot /mnt</b>
+<em>that'll make subsequent commands as if
+in your normal filesystem</em>
+(shell)bash
+<b>sudo su -</b>
+ <em>sudo su - allows you privilege</em>
+<b>vi var/log/pacman.log</b> find packages that were installed
+<b>downgrade</b> any troublesome packages
+
+<b>exit</b> <em>or <b>ctrl d</b></em>
+<b>exit chroot</b>
+<b>umount -R /mnt</b>
+<em>recursive un-mount any time you mounted, and then shutdown</em>
+<b>shutdown -h now</b>
+</a> 
+</div>
+</html>
+
+

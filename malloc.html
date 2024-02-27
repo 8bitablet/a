@@ -1,0 +1,34 @@
+<!-- page8 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>malloc</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css">
+</head><div class="preformat"><a style="font-family: 'Devin Chavez Font', sans-serif; font-style:normal; font-size: 20px">
+
+`malloc` btw is just a void pointer:
+<span class="alt-text">
+  void *malloc(size_t size);</span>
+
+and so it returns a pointer to the allocated memory block. Thats it.
+
+offsets (specifically `offsetof()`) helps in determining the correct size
+to allocate when using memory allocation (*malloc, calloc, etc..*) for a structure:
+<span class="alt-text">
+  struct Point {
+    int x; int y;
+  };
+
+  struct Point *myPoint = malloc(sizeof(struct Point));</span>
+
+you then might use offsetof like:
+<span class="alt-text">
+  size_t structSize = sizeof(struct Point);
+  offsetof(struct Point, y);</span>
+
+youll be able to use myPoint and yOffset to access y member
+</a>
+</div>
+</html>

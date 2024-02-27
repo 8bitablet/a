@@ -1,0 +1,51 @@
+<!-- page7 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>memcpy</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css">
+</head><div class="preformat"><a style="font-family: 'Devin Chavez Font', sans-serif; font-style:normal; font-size: 20px">
+
+for simplicity, let's just copy a subset of the source buffer
+<span class="alt-text">
+  #define BUFFER_SIZE 10
+
+  void resizeVideo(int *source, int srcWidth, int *dest, int destWidth) {
+    memcpy(dest, source, sizeof(int) * destWidth);
+  }
+
+  int main() {
+    int sourceBuffer[BUFFER_SIZE] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int destinationBuffer[BUFFER_SIZE];
+
+    int sourceWidth = BUFFER_SIZE;
+    int destWidth = BUFFER_SIZE;
+
+    int scalingFactor = 1;
+
+    if (scalingFactor == 1) {</span>
+        // Directly copy the content from sourceBuffer to destinationBuffer<span class="alt-text">
+        memcpy(destinationBuffer, sourceBuffer, sizeof(int) * destWidth);
+    } else {
+        // Resize the video (in this example, copy a subset of the source buffer)
+        resizeVideo(sourceBuffer, sourceWidth, destinationBuffer, destWidth);
+    }</span>
+
+    // Print the content of destinationBuffer<span class="alt-text">
+    for (int i = 0; i &lt; BUFFER_SIZE; i++) {
+        printf("%d, ", destinationBuffer[i]);
+    }
+
+    printf("\n");
+    return 0;
+  }</span>
+
+In this example, `memcpy` is used when the scaling factor is 1 to copy the
+entire content of `sourceBuffer` to `destinationBuffer`. If the scaling factor
+is different, a hypothetical `resizeVideo` function is called to perform some
+resizing operation (in this case, just copying a subset of the source buffer)
+</a>
+</div>
+</html>

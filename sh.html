@@ -1,0 +1,541 @@
+<!-- terminal/shell -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>sh</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css">
+</head><div class="preformat"><a style="font-family: 'Devin Chavez Font', sans-serif; font-style:normal; font-size: 20px">
+<em>shell</em>
+<em>~</em>  home directory    <em>/</em>  root directory
+
+Shell is a command interpreter intended for both interactive
+and shell-script use.
+Command plus a single period <b>.</b> refers to your
+current working directory.
+Change directory, <b>cd</b> traverses you forward or backward
+to a relative or absolute file path.
+
+Backslash <b>\</b> allows a command to be continued,
+prompted on the following command line. It's also
+what's known as an 'escape character'
+
+Comments <b>#</b> are made w/ hashtag, a special character.
+When used as a sha-bang <b>#!</b> it tells your system
+which interpreter to use to parse the rest of the file;
+That of which you can override by explicitly specifying the
+shell and writing the filename of your script, as you would
+to run your script.
+
+dollar sign <b>$</b> is a meta-character/sigil and
+tells the shell the next word is a variable.
+Of course within quotation marks its considered a regular
+character, as Quoted characters do not have a special meaning.
+Quotes are unique in that they behave like a toggle.
+
+A variable is a character-<a href="strings">string</a> in shell that stores
+some value. That value could be an integer, filename,
+string or some shell command itself.
+A command is a program interpreted by the system.
+
+<em>If your interests lie in understanding what a
+a shell is and its inner workings, you could
+look up: parser, executor and shell subsystems;
+Or see a list of <a href="c/helpcmd">commands</a>.</em>
+
+  <b>variable=value</b>
+
+Putting a space before or after <b>=</b> equals different results.
+This will be demonstrated as we go on.
+
+Setting a variable to an empty string looks something like:
+  <b>variable=""</b>
+
+Environment variables are a mechanism that passes information
+to all processes, created by a parent process. By default
+there are typically some pre-assigned variables.
+Every program will inherit these variables.
+The information flow is one-way, meaning shell script cannot
+change the current directory(parent).
+
+There are two different kinds of variables.
+Environment variables that are exported to all processes
+spawned by the shell. Their settings can be seen with the env command.
+A subset of environment variables, such as PATH, affects the behavior
+of the shell itself..
+
+.. <b>Local</b> variables affect only the current shell instance;
+
+To access the value stored in a variable, prefix its name with
+the dollar sign <b>$</b> The following script will access the
+value of defined variable NAME and print it to stdout;
+
+  <b>NAME="Marco_Polo"</b>
+  <b>echo $NAME</b>
+
+... or how about passing an argument to a script?
+Typically we think of this format w/ a command and file:
+<em><b>a-w</b> sets <b>w</b>ritable 'off' for All-&gt;(user,group,other),
+regardless of set bit occupation, henceforth this file would be
+considered a "write-protected regular file"</em>
+
+  <b>chmod a-w ./example</b>
+
+But there's also positional parameters that pass in commands
+like this <em>(will explain further on)</em>.
+
+  <b>./example.sh 1 2 3</b>
+
+You can find out what an individual variable is set to e.g.
+
+  <b>echo $WHATEVER</b>
+
+<b>$PS1</b> specifies the prompt printed before each command.
+Usually this is <em>$</em>
+  <b>$PS2</b>
+.. defines the secondary prompt, the prompt you see after
+multi-line commands such as <b>for</b> or <b>if</b>.
+
+  <b>echo $HOME</b>
+.. is the equivalent of <b>echo /home/user</b>
+or whatever your home directory is.
+
+<b>$PATH</b> variable lists directories that contain commands.
+If we have several commands in there, the directories are
+searched in the order specified. An empty string corresponds to
+your current directory.
+
+<b>$CDPATH</b> sets a path that tells the <b>cd</b> command where to search.
+For example if you set <b>CDPATH=$HOME</b>, you can <b>cd</b> to
+any subdirectory of $HOME from the current directory you are in.
+
+  <b>ls /your/directory</b>
+<em>ls: cannot access '/your/directory': No such file or directory</em>
+
+  <b>mkdir /your/directory</b>
+
+Anytime i use the <b>rm</b> command i follow it up with <b>-ir</b>
+as ive personally deleted things accidently. OR, having
+a "write-protected regular file" permission set from the
+start is preferable.
+The same thing using <b>mv</b>, as i recommend using <b>cp</b>
+over mv when applicable.
+With that said, i find this behavior insightful;
+
+  <b>rm -i</b> <em>file1 file2</em>
+
+The shell breaks this line up into four words.
+The first word is the command/program to execute.
+The next three are passed to the program as three
+arguments. So the program <b>rm</b> looks at the first
+argument, realizes it is an option -<em>because of the hyphen</em>,
+and treats the next two arguments as filenames.
+
+  <b>echo</b> "The directory your in is <b>$PWD</b>/filename.jpg"
+  <em>The directory your in is /currentdir/filename.jpg</em>
+
+For command substitution <b>$(command)</b> is considered
+the proper method, here's an example of that;
+
+  <b>A=$(expr $A + 2)</b>
+  <b>echo "$A</b> inefficient yet simple"
+
+Single quotes would treat everything as plain characters.
+
+<em>.. will explain expr and entr further on</em>
+<b>set</b> without an argument will list shell variables,
+shell functions, and environment variables.
+It can set or unset with the <b>+</b> or <b>-</b> option.
+It can be used with positional parameters for example:
+
+  <b>set apple banana carrot</b>
+
+This will set <b>apple</b> to correspond to the <b>$1</b>
+parameter, <b>banana</b> to <b>$2</b>, and <b>carrot</b> to <b>$3</b>
+ <em>(..will explain further on)</em>
+
+You can set and export in one line.
+
+  <b>export APPLE="my apple"</b>
+
+<b>unset</b> can be used to undefine any variable.
+
+The <b>export</b> command is necessary to update the environment
+variable. It lists all the exported variables;
+
+For environment variables to persist they must be set in file.
+By default these are hidden files in your system's root.
+However you can setup a user to have environment variables
+in the <b>/etc</b> designated for system configurations,
+then <b>../environment</b> which should already exist.
+  <b>ls -a home/user</b>
+should also contain familiar configuration files.
+
+<b>$IFS</b> is the "Input Field Seperator"
+IFS is a special variable which lists the characters used to terminate a word.
+Whitespace is what separates characters. This variable contains
+a space, a tab, and a newline.
+
+<em>If you are unsure about overriding your main IFS..
+you can set a different variable to it before hand like this;</em>
+
+  <b>OLDIFS=$IFS</b>
+
+<b>env</b> allows you to run another program in a custom environment
+without modifying the current one. Without specifying an argument it
+will list the current environment variables.
+
+You can imagine that a program generates a child process.
+And this process has the same environment as its parent.
+The process ID number is different, and this is typically referred
+to as 'forking'. Forking provides a way for an existing process to
+start a new one. However, there may be situations where a child process
+is not part of the same program as the parent process. In this case
+<b>exec</b> is used. It will execute a program; however
+the command-to-follow replaces the current shell -&gt; which means
+no subshell is created during this ~ and the 'current process'
+is replaced with this new command.
+
+<em>ls, du, find and grep</em> are good examples of commands to get started w/
+
+  <b>ls</b>  is used to list files and directories.
+
+<b>help command</b> to view the help page for a command <b>help help</b> for help -options
+and <b>man command</b> to view a man page, <b>man man</b>  traverse page; <em>e, f, z, d, PgDn
+y, b, w, u, PgUp</em> <b>info</b> command to view a command in stand-alone info pages.</a>
+
+  <b>du -hs </b> h for human readable, s for total bytes w/ no recursion
+
+FIND PATH TYPE NAME are the keywords that help me remember which order of
+options proceeds after <b>find</b>
+Keep in mind <b>-iname "example"</b> will not look for joined names such as
+<b>"anexample"</b>, however you can solve this when using <b>*</b> in a pattern.
+
+  <b>find / -type f -iname "*thisword*"</b>
+
+Basically we wrote look from the <b>/</b> directory of type <b>f</b>ilename
+for case-insensitive name "*thisword*", where the <b>*</b> is to avoid globbing.
+<em>In regular expressions a <b>.</b> dot is the pattern which matches any single
+character~combined with the asterisk operator <b>.*</b> it will match any number
+of any characters.</em>
+<b>find</b> does a recursive search on any file or path in quotes, provided that the
+expression is successfully matched. There is other case-insensitive options
+such as <b>-ilname  -iregex  -iwholename</b>..
+
+Pattern matching for words within files is accomplished with grep;
+
+  <b>grep -i "this" script.sh</b>
+
+Case-insensitive search for 'this' inside script.sh
+
+  <b>grep -nr 'yourstring*' . </b>
+
+..Recursively search through current directory for string w/ -n (line numbers)
+As a linux dev, you will quickly find that your workflow benefits from a new system;
+One that resorts to writing shell scripts during both: a task and learning how the
+system works. It is recommended to defer from CLI to writing a script if your input
+needs a layer of complexity that the PS1 would otherwise get in the way of.
+
+<a style="color:#646464; font-family:consolas,monospace; font-style:regular; font-size:14">
+<em>Every now and then you'll end up in a less tha desirable situation,
+where you either have a crashed/frozen terminal session, or you may have
+accidentally pressed a sequence of keys such as Alt+op+Backspace which
+can causes the cursor to start writing/erasing into the prompt;
+although you should be able to press Ctrl+C to interrupt,
+Ctrl+D for End-of-file signal,
+or Ctrl+Z to suspend currently running process.
+You can use   Shift+Alt+C  or  Ctrl+Alt+Fn2  to open an alternate
+tty session, where you can run <b>kill</b> from there.</em></a>
+
+Most Unix text facilities are line-oriented that search
+for patterns spanning several lines.
+The end-of-line character <b>$</b> is not included in
+the block of text that is searched. It is a separator,
+and regular expressions examine the text between the
+separators. If you want to search for a pattern that is
+at one end or the other, you use anchors.
+
+Caret <b>^</b> is the starting anchor.
+The regular expression <b>^A</b> will match all lines
+that start with an uppercase A. The expression <b>A$</b>
+will match all lines that end with uppercase A.
+If the anchor characters are not used at the proper end
+of the pattern, they no longer act as anchors;
+That is, the <b>^</b> is an anchor only if it is the
+first character in a regular expression.
+
+Dollar sign <b>$</b> is an anchor only if it is the last character.
+If you need to match a <b>^</b> at the beginning of the line or
+a <b>$</b> at the end of a line, you must escape the special
+character by typing a backslash <b>\</b> before it.
+
+So <b>$1,$2..$9</b> are known as <em>Positional <b>Parameters</b></em>,
+with emphasis on 'parameter', as they take on the value
+of the corresponding parameter.
+The <b>$</b> sign is just a variable. The number
+that follows indicates the position on the command line.
+<b>$0</b> represents the actual name of the script.
+<b>$1</b> indicates the first parameter. <b>$2</b> indicates
+the second parameter and so on.
+Here's another example in the context of a script;
+
+  <b>echo "param = $1"</b>
+  <b>echo "param = $2"</b>
+
+or passed in as an argument;
+
+  <b>./testfile 4 5</b>
+
+<b>$*</b> Asterisk is similar to the filename
+meta-character, in that it matches all arguments.
+
+<b>$@</b> is similar to <b>$*</b>, except it retains
+the spaces found in the variable.
+
+<b>$#</b> is equal to the number of arguments passed
+to the script.
+
+<b>$$</b> variable corresponds to the process ID of the
+current shell running the script. Every process has a
+different identification number. This is useful when
+picking a unique temporary filename. The following will
+select a unique filename, use it, then delete it;
+
+<b>$!</b> indicates process ID of the process executed
+with an ampersand, an asynchronous or background process.
+You do something else and wait for a background process.
+
+<b>$?</b> equal to the error returned from the previous
+program.
+
+<b>$-</b> corresponds to certain internal variables in
+the shell.
+
+The other class of variables are called flags or options.
+They are not read like a regular variable.
+They are boolean and internal to the shell.
+<em>However i find its best to think of an option as an
+'_extension' to a command, as opposed to some
+parameter of related letters, as every command
+is unique, so you cant assume so anyway.</em>
+They do not take assignment with <b>=</b>
+instead you use the <b>set</b> command.
+
+When trying to understand a script better, there is
+<b>-x</b> and <b>-v</b> options.
+<b>-v</b> echoes the line as it is read,
+while the <b>-x</b> option echoes as it's executed..
+<em>.. with <b>+</b> preceding each line.</em>
+
+<b>-n</b> will read a script and parse commands,
+but it does not execute. <b>-e</b> immediately exits
+the script if an error is present.
+<b>-t</b> executes one line and then exits.
+
+<b>-a</b> , all variables that have been modified
+or created are exported.
+Streams and File descriptors, brief introduction
+When you want to do input or output to a file,
+you have a choice of two basic mechanisms for representing
+the connection between your program and the file:
+File descriptors and Streams.
+File descriptors are represented as objects of type int,
+while streams are represented as FILE * objects.
+Both file descriptors and streams can represent a connection
+to a device (such as a terminal), or a pipe or socket for
+communicating with another process, as well as a normal file.
+Each Unix process has three standard POSIX file descriptors,
+corresponding to the three standard streams:
+Standard Input (stdin), Standard output (stdout),
+and Standard error (stderr). They can be used for
+a file or other I/O resource such as a pipe.
+
+Evaluation, pipelines, in this example;
+
+  <b>cmd1 ; cmd2 ; cmd3 ; cmd4</b>
+  <b>cmd1 & cmd2 & cmd3 & cmd4</b>
+  <b>cmd1 && cmd2 && cmd3 && cmd4</b>
+  <b>cmd1 || cmd2 || cmd3 || cmd4</b>
+
+Semicolon tells the shell to operate sequentially.
+First "cmd1" is executed, then "cmd2," etc.
+Each command starts up, and runs as long as they
+don't need input from the previous command.
+The <b>&</b> command launches each process in a
+detached manner. The order is not sequential,
+and you should not assume that one command
+finishes before the other.
+The last two examples, like the first,
+execute sequentially, as long as the status is correct.
+In the <b>&&</b> example, "cmd4" is executed if all
+three earlier commands pass.
+In the <b>||</b> example, "cmd4" is executed if the first three fail.
+
+  <b>cat wordoc1.txt | cat wordoc2.txt</b>
+
+  <b>cat wordoc1.txt || cat wordoc2.txt</b>
+
+Main difference between the two being, when the first command
+is not recognized it will terminate, where as the double is
+used as comparison (on failure of the first command and ignores the second).
+So the comparison is unsuccessful and it runs the second command.
+
+The technicality however of the first example is just how
+we described operators by specified order of evaluation,
+or the manner in which commands are processed.
+
+<b>/proc</b> directory refers to processes currently running.
+Lets print a list of registered interrupts on the system.
+
+  <b>cat /proc/interrupts</b>
+<a style="color:#646464; font-family:consolas,monospace; font-style:regular; font-size:14">
+An interrupt is a signal emitted by a device
+attached to a computer or from a program within
+the computer. It requires the OS to stop and
+figure out what to do next. An interrupt temporarily
+stops or terminates a service or a current process.
+Most I/O devices have a bus control line called
+Interrupt Service Routine (ISR) for this purpose. 
+</a>
+Using the shell interactively, or one that is from
+user and not running from a file, reads out of stdin.
+Without an argument this is the shell's behavior.
+<b>-s</b> forces shell to read stdin for commands.
+Normally, the shell checks standard input, and checks
+to see if it's a terminal or a file. 
+If it is a terminal, then it ignores the TERMINATE
+signal, which is associated with signal zero in the
+trap command.
+Also INTERRUPT is ignored. However, if the shell is
+reading from a file, these signals are not ignored.
+The <b>-i</b> option tells the shell to
+not ignore these traps.
+<b>-p</b> unallows changing of the effective user and
+group, to whomever is the real user and group.
+
+Basic example of an if statement
+
+<b>if test "$(id -u)" == "0"</b>
+<b>then</b>
+   <b>echo</b> "This script is running as root" 
+<b>else</b>
+   <b>echo</b> "This script is not running as root"<b>1&gt;&amp;2</b>
+   <b>exit 1</b>
+<b>fi</b>
+
+<b>id -u</b> flag is used to check the user id of
+the user who is running the script. And if the user
+id is not <b>0</b> that means the user is not root
+and the script will print the else statement.
+The 1&gt;&amp;2 is used to redirect the output to stderr.
+  <em>i.e. (stderr=2, stdout=1, stdin=0)..</em>
+Exit 1 will exit the script with a status code of 1,
+a failure. And if we do not use exit 1 the script will
+exit with a status code of <b>0</b>, a success.
+
+It is often the case you can use the logical operators
+we discussed       <b>&&</b>    <b>&</b>    <b>||</b>    <b>;</b>
+in place of this type of if statement, as they share
+similar behavior.
+
+UNIX comes with two programs called true and false,
+"exit 0" and "exit 1-255".
+These are known as an Exit status, with integers
+from 0 to 255.
+The shell can either examine the integer value
+of an exit status, or treat the value as a boolean.
+Zero is true (successful), all other values are false.
+If you do not provide an exit status,
+the system returns with the status
+of the last command executed.
+
+Operators take standard input or standard output, and also return an exit status.
+
+  <b>cat &lt;&lt; testhello</b>
+  <b>&gt;</b> Hi!vehello
+  <b>&gt;</b> Hollow World
+  <b>testhello</b>
+
+testhello on the last line, acts as a delimeter of this script.
+
+‘&gt;‘ symbol is used for stdout redirection.
+
+  <b>ls -lap &gt; /testfile</b>
+
+This will redirect and REPLACE the output from <b>ls</b> ,
+however you can append to the end of a file without replace;
+
+  <b>ls -lap &gt;&gt; /testfile</b>
+
+Relational operators always print a zero or one.
+Options can also be relational operators used for
+comparison;
+
+  <b>==</b>      Equal to                 <b>-eq</b>
+  <b>!=</b>      Not equal to             <b>-ne</b>
+  <b>&gt;</b>       Greater than             <b>-gt</b>
+  <b>&lt;</b>       Less than                <b>-lt</b>
+  <b>&gt;=</b>      Greater than or equal to <b>-ge</b>
+  <b>&lt;=</b>      Less than or equal to    <b>-le</b>
+
+
+Basic structure of a case statement
+
+  <b>FRUIT="banana"</b>
+    <b>case "$FRUIT" in</b>
+      <b>"apple") echo</b> "Tasty."
+    <b>;;</b>
+      <b>"banana") echo</b> "Yummy banana nut bread."
+    <b>;;</b>
+  <b>esac</b>
+
+FRUIT was equal to banana so we got back Yummy banana nut bread.
+Lets see if we can get apple in a function.
+
+    <b>expr</b>, is used to perform arithmetic, e.g.
+      <b>expr 1 + 1   expr 2 \* 2   expr 3 / 3</b>   etc.
+
+Functions may be expressed in this way.
+<em>They're a bit particular about character placement,
+newlines, spacing and indentation although, you can enforce
+your own tabulated construct</em>
+
+  <b>apple(){</b>
+    <b>A=$(expr $A + 1)</b>
+  <b>}</b>
+  <b>A=1</b>
+  <b>while ["$A" -le 10]</b>
+  <b>do</b>
+    <b>echo $A</b>
+    <b>echo</b> 'apple!'
+    <b>apple</b>
+  <b>done</b>
+  <b>echo</b> 'yay we got ALOT of apples'
+
+
+<b>For Loop</b> example;
+Here's an in depth description of a working for loop;
+
+ <b>for</b> NAME [in WORDS ... ] ; <b>do</b> COMMANDS; <b>done</b>
+ Execute commands for each member in a list.
+
+ The 'for' loop executes a sequence of commands for each member in a
+ list of items.  If 'in WORDS ...;' is not present, then 'in "<b>$@</b>"' is
+ assumed.  For each element in WORDS, NAME is <b>set</b> to that element, and
+ the COMMANDS are executed.
+<p style="color:#646464; font-family:consolas,monospace; font-style:regular; font-size:14">
+Parentheses and braces
+<b>( )</b> and <b>{ }</b> are analogous in some ways i.e. variables,
+expansion, nesting, however they differ in a variety of ways;
+most simply, parentheses work on numbers, commands as well as subshell execution.
+<em>subshell refers to <b>$variable</b></em>
+where as the other works by user-defined conditions/errors or groups.
+Square brackets <b>[ ]</b> are similar to parentheses except you'll
+see it used with conditions, arguments and expressions as
+opposed to environment variables, etc.</p>
+
+</p>
+</div>
+</html>
+

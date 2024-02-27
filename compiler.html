@@ -1,0 +1,81 @@
+<!-- page9 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>compilation steps</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css">
+</head><div class="preformat"><a style="font-family: 'Devin Chavez Font', sans-serif; font-style:normal; font-size: 20px">
+
+Conclusion
+if you're interesting in the compiler specifics, we should have
+a high level overview of it... keep mind there may also be optimi-
+zation steps interspersed throughout the process, as well as specific
+implementations/intermediate representations...
+
+Lexer
+analyzes the source code and breaks it into smaller units called tokens.
+Tokens represent the fundamental building blocks of the language, including
+keywords, identifiers, operators, and other language elements.
+In the context of assembly, the lexer would identify tokens
+such as assembly instructions, registers, constants, and labels.
+
+Parser
+takes the stream of tokens produced by the lexer and constructs an
+Abstract Syntax Tree (AST). The AST represents the hierarchical structure
+of the program, capturing the relationships and grouping of different language constructs.
+In the context of assembly, the AST might be less complex compared to higher-level languages,
+and it may not involve as many elaborate structures.
+
+Code Gen
+translate the AST into assembly language code. This involves
+generating assembly instructions that correspond to the
+high-level constructs represented in the AST.
+
+Assembly<a href="asm.html#asm-anch" id="compiler-anch">go to page10</a>
+After parsing, the compiler generates assembly code from the AST.
+This assembly code consists of human-readable mnemonics and operands that
+correspond to the machine instructions of the target architecture.
+The assembly code is then passed through an assembler, which translates it
+into machine code, producing an object file containing binary instructions and additional information.
+
+Assembler
+translates assembly language code into machine code. It takes the
+human-readable assembly code and converts it into the binary code
+that the computer's CPU can execute directly.
+The assembler performs tasks such as resolving symbolic addresses (like labels)
+to actual memory addresses, generating machine code instructions,
+and producing an object file containing the translated code.
+
+Linking
+if your program consists of multiple source files or modules, the linker combines the
+object files and resolves references between them. It ensures that functions and variables
+used in one module are correctly linked to their definitions in other modules.
+The output of linking is typically an executable file that can be run independently.
+The linker may also incorporate external libraries into the executable.
+
+Loading
+is responsible for taking the executable file produced by the linker and
+loading it into memory for execution. It sets up the program's entry point,
+initializes variables, and performs any necessary runtime tasks.
+
+{Tokens} are the smallest element, consisting of:
+Whitespace, Blanks
+Horizontal or vertical tabs
+New lines, Form feeds, and Comments
+
+An {Identifier} is a sequence of characters used to denote one of the following:
+Object or variable name
+Class, structure, or union name
+Enumerated type name
+Member of a class, structure, union, or enumeration
+Function or class-member function
+typedef name
+Label name
+Macro name
+Macro parameter
+
+</a>
+</div>
+</html>
