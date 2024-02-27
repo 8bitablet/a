@@ -61,13 +61,13 @@ it would have to find this function defined within the program
 one notable feature related to a function is the ability to
 capture the internal instructions of a function
 
-/* IMPORTANT */
 since this is our first example, you should remember that
 all program instructions are called out from `int main` first,
 and then proceed to the rest of the program
 <span class="alt-text">
   int func(int a,int b) {
-    int c = a+b;
+    int c = a + b;
+    return c;
   }
 
   int main() {
@@ -78,9 +78,10 @@ and then proceed to the rest of the program
     return 0;
   }</span>
 
-we explicitly declared new variables in `main` to show
-`internfunc` could have the same arguments as func and we
-could rename/reassign those parameters as well
+we explicitly declared new variables in `main` to show how main works
+and to demonstrate how a function could be assigned the same arguments
+as another function, in this case `internfunc` was assigned to `func(a,b)`
+and we renamed/reassigned those parameters as well
 
 
 <div id="function-pointer-anch">function pointer</div>
