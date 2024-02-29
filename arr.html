@@ -14,7 +14,7 @@
 
 if `int arr[4] = ...`, were to equal something
 then we could gain access and receive a
-normal integer value when specifying its index
+normal integer value when specifying its index.
 the index of an array is random when uninitialized
 or else its determined by the initializer e.g.
 <span class="alt-text">
@@ -22,6 +22,41 @@ or else its determined by the initializer e.g.
 
 what is the size of this array?
 just count the elements starting from 0
+
+all these kinds of arrays are fixed, and their size will
+be determined at compile time...
+<span class="alt-text">
+  int arr[var] = {a, b, c};</span>
+
+thats not to say you cant allocate a new array w/
+a larger size and copy the existing elements from
+the old array to the new one (then, continue adding elements)
+
+you would just need to use the same method we showed for
+assigning one function to another...
+<span class="alt-text">
+  int MaxSize = 5;
+  int *FixedArray = (int*)malloc(MaxSize * sizeof(int));</span>
+
+and then you would iterate over the array in a forloop adding
+<span class="alt-text">
+   FixedArray[i] = i + 1;</span>
+
+increasing the size and copy the existing elements to the
+new array, and add the elements to the new array.
+
+`(int*)` is referred to as type casting, youll see this alot in C
+as its to assure the type compatibility when assigning another variable
+that may or may not be allowed; The compiler will perform this conversion
+implicitly and issue warnings for implicit conversions that could result in
+data loss... there's a hierarchy of specific casting levels allowed/not allowed
+
+`malloc` is just a function w/ a `size_t`(atleast 16bit) parameter
+and you'll come across it more as you progress
+<span class="alt-text">
+  void *malloc(size_t size)</span>
+
+/* see `malloc` on page8 */
 
 </a>
 </div>
