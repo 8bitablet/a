@@ -1,25 +1,17 @@
-/* asterisk = wildcard selector, and we reset initial values in `body` */
-/* resetting initial values might require reset/normalize.css instead */
+/* asterisk (*) = wildcard selector */
+/* test reset initial values w/ initial or reset/normalize.css */
+/* refactorExp and fix user-select and text-decoration */
 @font-face {
     font-family: 'Fixedsys Excelsior 3.01';
     font-style: normal;
     font-weight: 400;
     src: local('Fixedsys Excelsior 3.01'), url('Fixedsys Excelsior 3.01.woff') format('woff');
 }
-* {
-    background-color: #222222;
-    color: white;
-    text-decoration: none;
-    font-family: 'Fixedsys Excelsior 3.01';
-    font-style: normal;
-    font-size: 22px;
-}
 
 body {
     all: initial;
     background-color: #222222;
     color: white;
-    text-decoration: none;
     font-family: 'Fixedsys Excelsior 3.01';
     font-style: normal;
     font-size: 22px;
@@ -57,15 +49,13 @@ div {
 }
 
 .no-wrap {
-    white-space: no-wrap; 
-    user-select: none;
+    white-space: no-wrap;  
     font-family: 'Fixedsys Excelsior 3.01';
     font-style: normal;
     font-size: 22px;
 }
 .no-wrap * {
     white-space: inherit; 
-    user-select: inherit;
     font-family: inherit;
     font-style: inherit;
     font-size: inherit;
