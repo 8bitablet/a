@@ -38,7 +38,6 @@ a {
     cursor: pointer;
 }
 
-/* Global link styles */
 div {
     white-space: pre-wrap;
     color: white;
@@ -54,7 +53,7 @@ div {
     font-style: normal;
     font-size: 22px;
 }
-.no-wrap * {
+.no-wrap *{
     white-space: inherit; 
     font-family: inherit;
     font-style: inherit;

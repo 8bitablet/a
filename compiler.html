@@ -6,7 +6,7 @@
 <title>compilation steps</title>
 <meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
 <link rel="stylesheet" href="style.css">
-</head><div class="preformat">
+</head><body><div class="preformat">
 
 Conclusion
 If you're interesting in the compiler specifics, we should have
@@ -17,7 +17,7 @@ implementations/intermediate representations..
 Preprocessor
 This involves processing the source code before actual compilation begins.
 for macro expansion, it'll replace macros w/ their corresponding code
-per `#define` statement. Then it process `#include` directives to
+per `#define` statement. Then it processes `#include` directives to
 include the content of headers into the source code. Conditions
 are handled such as; `#ifdef`, `#ifndef`, `#else`, `#elif` and `#endif`
 directives to include (or exclude) portions of code based on preprocessor-
@@ -69,11 +69,9 @@ based on the decisions made during instruction selection, register alloc-
 ation, and other considerations.
 
 Assembly<a href="asm.html#asm-anch" id="compiler-anch">go to page10</a>
-After parsing, the compiler generates assembly code from the AST.
+The compiler generates assembly code from the AST.
 This assembly code consists of human-readable mnemonics and operands that
 correspond to the machine instructions of the target architecture.
-The assembly code is then passed through an assembler, which translates it
-into machine code, producing an object file containing binary instructions and additional information.
 
 Assembler
 Translates assembly language code into machine code. It takes the
@@ -81,7 +79,8 @@ human-readable assembly code and converts it into the binary code
 that the computer's CPU can execute directly.
 The assembler performs tasks such as resolving symbolic addresses (like labels)
 to actual memory addresses, generating machine code instructions,
-and producing an object file containing the translated code.
+and producing an object file containing the translation of binary
+instructions and additional information.
 
 Linking
 If your program consists of multiple source files or modules, the linker combines the
@@ -111,6 +110,4 @@ Label name
 Macro name
 Macro parameter
 
-</a>
-</div>
-</html>
+</a></div></body></html>
