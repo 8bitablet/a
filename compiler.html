@@ -9,29 +9,64 @@
 </head><div class="preformat">
 
 Conclusion
-if you're interesting in the compiler specifics, we should have
+If you're interesting in the compiler specifics, we should have
 a high level overview of it... keep mind there may also be optimi-
 zation steps interspersed throughout the process, as well as specific
-implementations/intermediate representations...
+implementations/intermediate representations..
+
+Preprocessor
+This involves processing the source code before actual compilation begins.
+for macro expansion, it'll replace macros w/ their corresponding code
+per `#define` statement. Then it process `#include` directives to
+include the content of headers into the source code. Conditions
+are handled such as; `#ifdef`, `#ifndef`, `#else`, `#elif` and `#endif`
+directives to include (or exclude) portions of code based on preprocessor-
+defined conditions. Comments are removed as well during this time.
+And lastly, it generates line information for the compiler to use
+in error messages and debugging.
 
 Lexer
-analyzes the source code and breaks it into smaller units called tokens.
+Analyzes the source code and breaks it into smaller units called tokens.
 Tokens represent the fundamental building blocks of the language, including
 keywords, identifiers, operators, and other language elements.
 In the context of assembly, the lexer would identify tokens
 such as assembly instructions, registers, constants, and labels.
 
 Parser
-takes the stream of tokens produced by the lexer and constructs an
+Takes the stream of tokens produced by the lexer and constructs an
 Abstract Syntax Tree (AST). The AST represents the hierarchical structure
 of the program, capturing the relationships and grouping of different language constructs.
 In the context of assembly, the AST might be less complex compared to higher-level languages,
 and it may not involve as many elaborate structures.
 
-Code Gen
-translate the AST into assembly language code. This involves
-generating assembly instructions that correspond to the
-high-level constructs represented in the AST.
+Intermediate Code Gen
+The AST is translated into an intermediate code representation. This code is typically
+closer to the target machine code but remains independent of the specific hardware architecture.
+This code generation handles complex expressions, assignments, control flow, structures,
+and other language constructs, translating them into a form suitable for optimization.
+The compiler will manage a symbol table which keeps track of variable names, types,
+and other relevant information. This information is crucial for later stages.
+
+Optimization
+This stage invokes those simplifications that may require constant folding, reducing algebraic
+expressions, and common subexpression eliminiation. It analyzes and modifies the code structure
+to enhance control flow; This can include loop unrolling, loop fusion, and other techniques to
+enhance branch predition. It'll also examine how data is used and propogated through the program,
+renaming variables and eliminiating any dead code. Then it replaces function calls with the actuial
+code of the function, reducing the overhead of said call instructions. This optimization can span
+multiple functions, and it'll make sure to manage memory process registers and any concurrent loops.
+
+Code Generation
+Maps the abstract operations in the intermediate code to specific machine instructions or
+assembly language instructions; Assigns variables and values to processor registers,
+As well as optimizing exectution time and minimzing memory access. This means it'll
+determine how memory addresses are calculated and accessed, as well as the order of
+instructions theat make the most efficient use of the processor's resources.
+It also inserts code to handle exceptions and interrupts. Next, it allocates
+and manages space on the call stack for funtion parameters, local variables,
+and return addresses. Finally it'll generate the machine code or assembly
+based on the decisions made during instruction selection, register alloc-
+ation, and other considerations.
 
 Assembly<a href="asm.html#asm-anch" id="compiler-anch">go to page10</a>
 After parsing, the compiler generates assembly code from the AST.
@@ -41,7 +76,7 @@ The assembly code is then passed through an assembler, which translates it
 into machine code, producing an object file containing binary instructions and additional information.
 
 Assembler
-translates assembly language code into machine code. It takes the
+Translates assembly language code into machine code. It takes the
 human-readable assembly code and converts it into the binary code
 that the computer's CPU can execute directly.
 The assembler performs tasks such as resolving symbolic addresses (like labels)
@@ -49,14 +84,14 @@ to actual memory addresses, generating machine code instructions,
 and producing an object file containing the translated code.
 
 Linking
-if your program consists of multiple source files or modules, the linker combines the
+If your program consists of multiple source files or modules, the linker combines the
 object files and resolves references between them. It ensures that functions and variables
 used in one module are correctly linked to their definitions in other modules.
 The output of linking is typically an executable file that can be run independently.
 The linker may also incorporate external libraries into the executable.
 
 Loading
-is responsible for taking the executable file produced by the linker and
+Is responsible for taking the executable file produced by the linker and
 loading it into memory for execution. It sets up the program's entry point,
 initializes variables, and performs any necessary runtime tasks.
 
