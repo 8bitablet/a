@@ -8,17 +8,14 @@
     src: local('Fixedsys Excelsior 3.01'), url('Fixedsys Excelsior 3.01.woff') format('woff');
 }
 
+a { 
+    text-decoration: none;
+}
+
 body {
     all: initial;
     background-color: #222222;
     color: white;
-    font-family: 'Fixedsys Excelsior 3.01';
-    font-style: normal;
-    font-size: 22px;
-}
-
-a { 
-    white-space: pre-wrap;
     font-family: 'Fixedsys Excelsior 3.01';
     font-style: normal;
     font-size: 22px;
