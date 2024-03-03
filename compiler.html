@@ -5,14 +5,13 @@
 <meta charset="utf-8">
 <title>compilation steps</title>
 <meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
-<link rel="stylesheet" href="style.css">
-</head><body><div class="preformat">
+<link rel="stylesheet" href="style.css"></head><body>
 
 Conclusion
 If you're interesting in the compiler specifics, we should have
 a high level overview of it... keep mind there may also be optimi-
 zation steps interspersed throughout the process, as well as specific
-implementations/intermediate representations..
+implementations/intermediate representations specific to C/GCC...
 
 Preprocessor
 This involves processing the source code before actual compilation begins.
@@ -26,18 +25,57 @@ And lastly, it generates line information for the compiler to use
 in error messages and debugging.
 
 Lexer
-Analyzes the source code and breaks it into smaller units called tokens.
-Tokens represent the fundamental building blocks of the language, including
-keywords, identifiers, operators, and other language elements.
-In the context of assembly, the lexer would identify tokens
-such as assembly instructions, registers, constants, and labels.
+This is for analyzing the source code and breaking it into smaller units called tokens.
+These units are meant to represent the language fundamentally, therefore its necessary for
+it to produce tokens such as keywords, identifiers, literals and other tokens, which'll
+represent the following... {Keywords} These are predefined, reserved words in the language
+(e.g., char, int, struct) that have special meanings and cannot be used as identifiers.
+{Literals} These represent fixed values directly written in the code, such as numerical
+values (1, 2.718), string literals ("abc"), and character literals ('a').
+{Identifiers} These include names for objects or variable names, structures, unions, or
+enumerated type names, members of a structure, union, or enumeration, functions, typedef names,
+label names, macro names, and macro parameters. And the rest of the tokens are for comments and
+whitespace characters (spaces, horizontal or vertical tabs, new lines, form feeds).
 
 Parser
-Takes the stream of tokens produced by the lexer and constructs an
-Abstract Syntax Tree (AST). The AST represents the hierarchical structure
-of the program, capturing the relationships and grouping of different language constructs.
-In the context of assembly, the AST might be less complex compared to higher-level languages,
-and it may not involve as many elaborate structures.
+Takes the stream of tokens produced by the lexer and constructs an Abstract Syntax Tree (AST)
+w/ Context-Free Grammar (CFG). This'll define the syntactic structure of the language in a
+formal way, using "production rules"... It also guides the generated parser in constructing
+the abstract syntax tree that'll represent the hierarchical structure of the source code,
+capturing the relationships and grouping of different language constructs.
+Associativity and precedence come into play as part of refining the CFG to
+handle expressions and operators correctly. Once you have the CFG in place,
+you often need to augment it with information about the precedence and associativity
+of operators to resolve potential ambiguities in expressions. In short, Context-Free Grammar (CFG)
+defines the set of valid sentences or programs through a set of production rules.
+These rules specify how different components of the language can be combined
+to form valid constructs. A typical CFG consists of... {Terminals} These are the basic elements
+of the language, such as keywords, identifiers, and literals. {Non-terminals} These are reserve
+words for syntactic categories or constructs. Non-terminals are defined in terms of other non
+terminals or terminals. {Production rules} These rules specify how non-terminals can be replaced
+or expanded into a sequence of terminals and/or other non-terminals.
+
+The starting point is often a designated non-terminal representing the entire program, and by
+applying the production rules, the compiler can generate valid sentences or programs according
+to the defined syntax. The process continues until terminal symbols are reached, forming a valid
+program structure.
+
+Trees (e.g. left-leaning trees) help illustrate how the input string is derived based on the
+rules of a context-free grammar. A (leftmost) derivation is a series of grammar rule applications
+that, at each step, replaces the leftmost non-terminal symbol in the current sentential form.
+It's a way of deriving a string of terminal symbols from the start symbol of a CFG.
+In the context of parsing, especially recursive descent parsing, a left-leaning tree
+is a syntax tree where the leftmost child of each node corresponds to the leftmost
+derivation of the corresponding substring in the input. Recursive descent parsing
+in conclusion is a top-down parsing technique where the parser starts with the top
+level grammar rule and recursively applies productions to match the input. Each non
+terminal has a corresponding parsing function that tries to match the input against
+the production rules.
+
+Semantic Analysis
+Checks the meaning and consistency of the program beyond its syntactic structure.
+It goes beyond the grammar rules and examines the program's semantics to catch potential
+errors and ensure that the program behaves as intended.
 
 Intermediate Code Gen
 The AST is translated into an intermediate code representation. This code is typically
@@ -94,20 +132,4 @@ Is responsible for taking the executable file produced by the linker and
 loading it into memory for execution. It sets up the program's entry point,
 initializes variables, and performs any necessary runtime tasks.
 
-{Tokens} are the smallest element, consisting of:
-Whitespace, Blanks
-Horizontal or vertical tabs
-New lines, Form feeds, and Comments
-
-An {Identifier} is a sequence of characters used to denote one of the following:
-Object or variable name
-Class, structure, or union name
-Enumerated type name
-Member of a class, structure, union, or enumeration
-Function or class-member function
-typedef name
-Label name
-Macro name
-Macro parameter
-
-</a></div></body></html>
+</a></body></html>

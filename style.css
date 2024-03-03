@@ -8,61 +8,40 @@
     src: local('Fixedsys Excelsior 3.01'), url('Fixedsys Excelsior 3.01.woff') format('woff');
 }
 
-a { 
-    text-decoration: none;
-}
-
 body {
     all: initial;
     background-color: #222222;
+    white-space: pre-wrap;
     color: white;
     font-family: 'Fixedsys Excelsior 3.01';
     font-style: normal;
     font-size: 22px;
 }
 
-.preformat {
-    white-space: pre-wrap;
-    user-select: none;
-    font-family: 'Fixedsys Excelsior 3.01';
-    font-style: normal;
-    font-size: 22px;
+a { 
+    text-decoration: none;
+    color: white;
 }
 
-.highlight-on-hover:hover {
+.hl-hover:hover {
     background-color: yellow;
     color: black;
     cursor: pointer;
 }
 
-div {
-    white-space: pre-wrap;
-    color: white;
-    text-decoration: none;
-    font-family: 'Fixedsys Excelsior 3.01';
-    font-style: normal;
-    font-size: 22px;
-}
-
 .no-wrap {
     white-space: no-wrap;  
-    font-family: 'Fixedsys Excelsior 3.01';
-    font-style: normal;
-    font-size: 22px;
 }
 .no-wrap *{
     white-space: inherit; 
-    font-family: inherit;
-    font-style: inherit;
-    font-size: inherit;
+}
+
+.reserve {
+    color: blue;
 }
 
 .alt-text {
-    white-space: pre-wrap;
     color: #FEFFBA; 
-    font-family: 'Fixedsys Excelsior 3.01';
-    font-style: normal;
-    font-size: 22px;
 }
 
 footer {
