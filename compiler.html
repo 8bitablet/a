@@ -12,6 +12,10 @@ If you're interesting in the compiler specifics, we should have
 a high level overview of it... keep mind there may also be optimi-
 zation steps interspersed throughout the process, as well as specific
 implementations/intermediate representations specific to C/GCC...
+This is how the compiler will read &amp; produce `.o` file(s)
+It doesnt need to see the full definition of a function to
+compile code that calls it; it only needs to know get the
+function's signature (its return type and parameter type)
 
 Preprocessor
 This involves processing the source code before actual compilation begins.
@@ -131,5 +135,14 @@ Loading
 Is responsible for taking the executable file produced by the linker and
 loading it into memory for execution. It sets up the program's entry point,
 initializes variables, and performs any necessary runtime tasks.
+
+Conclusion
+If a function is declared before its called in code, the compiler knows the function's
+signature and generates code that includes the necessary information for the linker.
+Thus the compiler can catch symbols/references during one of its stages of compilation.
+I like to imagine this as nodes within a long chain, which are representations of
+the longest chain of nodes in the program... This is sometimes the graphics library
+and the framework header... I will explain more about "systems of programming" on
+another page (see `output`)
 
 </a></body></html>

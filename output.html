@@ -1,0 +1,38 @@
+<!-- output -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>asm-code program</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css"></head><body>
+
+Continuing w/ C/assembly, it would be helpful in learning more about assembly.
+i thought we might explain the systems of programming and the individual parts to a program,
+as well as how a higher level language influences the lower level.
+
+Theres 4 main parts to what i call, an **asm-code program**. It will be a simple test that
+compiles and generates an `asm-code.out`...
+
+**Structure members**
+Demonstrating how structures (struct in C) are laid out in memory and how their members' offsets
+are calculated and used in assembly.
+
+**Create function**
+We focus on how functions are created, including how functions are defined and called in C versus
+how they are translated into assembly which'll illustrate the concept of procedure calls, stack management,
+and pointer usage in a very hands-on manner.
+
+**Use function**
+To continue w/ systems of programming, we want to create another function that actually uses our last function,
+as you want to design things in such a way where every function is being used in some way by the rest of the
+program and not just hanging around for no reason. Therefore we'll be integrating the `printf` function, which
+also helps us demonstrate the use of a function, the linkage to an external library and how data (like char type)
+are passed to such functions, which'll reasonably bridge the gap between C code and assembly.
+
+**Initialization &amp; entry point**
+To have a valid program, there has to be a variable and/or function call inside of `int main` that tells our program
+what first to do (declarations can go above it, but definitions have to be below `int main`, or exist in another file (which case they are `extern`)).
+So we'll detail how global variables and functions are initialized and the significance of the main function as the entry point of the program.
+ps. Definitions of functions and global variables can appear above main if they are being implemented in another file/ header
+</a></body></html>
