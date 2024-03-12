@@ -94,27 +94,6 @@ a refresh step. It finds application in the correspondence of main memory blocks
 and those in the cache. This is specified by the specific mapping instruction.
 Cache internally is also a group of flip-flop gates.
 
-<em>CRTC and plane in linux</em>
-<em>see also CVT, Coordinated Video Timing</em>
+<em>... to be continued...</em>
 
-framebuffer = a portion of dram containing a bitmap that drives a video display,
-a buffer being a region of memory used to store data. There are many different
-kinds of buffers. A framebuffer in particular represents all the pixels in a frame.
-The implementation of a pixel comes out of the cpu, which depends on the monitors
-specifications. To setup a pixel internally, 8 bits are sent to the display controller.
-That display controller turns these bits into an analog voltage level
-(according to the monitor specifications).
-A voltage level is produced, advancing pixel by a specific amount.
-1 pixel is represented for red, green and blue. So that means you send (3) sets of 8 bits
-Each row of the screen will need 1920 pixels and each column 1080 pixels.
-This grid is considered the 'display'. For each pixel sends (3x) 8 bits of data to feed the
-image to the screen. 1920 * 1080 * 3 bytes (or 24 bits)
-= 6220800 bytes (or 5.93 megabytes)
-The screen refreshes (60x) per sec. That means it sends the display 1 new frame of 6 mb
-(of your picture) (60x) per sec.
-360 mb of bits per sec.
-There's also the intensity of a pixel which can be described by an incremental circuit
-of some sort. For color you can make a function normalizing the 3 bit channel definition,
-or 4 because you want alpha channel.
-Again this process comes in and out of the cpu, however the gpu has its own framebuffer.
 </p></body></html>
