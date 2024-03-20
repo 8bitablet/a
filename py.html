@@ -1,0 +1,394 @@
+<!-- Would you eat them w/ a fox? -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Would you eat them in a box?</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css"></head><body>
+<h3><u>Warning</u>! Learn C before you learn python, or it will be difficult to understand why ANYTHING is the way it is</h3><b>This is the green eggs &amp; ham that make up pythons indigestible layer</b>
+
+  &#183 A value passed, always starts from the last (or sum)
+  &#183 for key:value (what for loops amount to)
+  &#183 Functions as parameters and type (much like contiguous blocks of memory),
+    arrays of arrlist[] associates w/ any array type,
+    and parameters as objects that can inherit from everything
+    (therefore everything can be accessed through everything)
+  &#183 Consolidating expressions &amp; comprehension used to assign
+    whole expressions (generator objects), and variable-value
+    assignment (as in multi-variable sequence unpacking)
+
+  <em>..if that doesnt make sense, humour me</em>
+
+ First off, C and Python are fundamentally different
+<span class="alt-text">
+  def foo(p):
+      print(p)
+  def spam(reassign):
+      foo(reassign)
+  variable = 8
+  spam(variable)</span>
+
+We are reassigning and calling a function, because you dont declare things in python
+instead you would do something similar, where a function is created and variables are assigned
+
+The calling convention-system for calling functions in python is not like C,
+where you are thinking in terms of framework headers and graphics library headers.
+Instead, you have to call a function on an "as needed" basis. Python is like a calculator.
+Everything from passing parameters to assigning functions is simplified (which somehow makes it more confusing)
+Luckily it doesnt matter if you use a `TAB` character, as you can <em>choose</em> the indentation level;
+w/ that said its a common convention to use (4x) spaces. Indentation is essential for defining the statement block.
+
+You can think of python like your trying to create functions inside `main.c`,
+where you call them at the end (`int main`), thats reminiscent to a python script
+
+<b>For loops can have a `key:value` type format</b>
+Once you understand the format of For loops, you'll have 50% of the battle cleared
+<span class="alt-text">
+  `for key, value in function(param):`</span>
+
+this `key:value` concept is essential to python, or pythons methodology. There is also this inherent consolidation behavior of functions,
+where different functions hold different values, and calling `print(result)` would consolidate those values
+
+<b>Python's "invoking" behavior is such that if you pass in a value, it's always starting from the sum or (last) by default</b>
+<span class="alt-text">
+  def func(x):
+      def inner(y):
+          return x + y
+      return inner
+  newFunc = func(5)
+  result = newFunc(3) #Outputs 8</span>
+
+<em>In the example above, `inner` is a closure that captures the variable `x` from the enclosing scope of `func`
+"currying" carries over/translates the evaluation of a function-closure that took multiple arguments</em>
+<span class="alt-text">
+  def func(x, y):
+      return x + y
+  double = partial(func, 3)
+  result = double(5) #Outputs 8</span>
+
+<em>partials capture the instructions and assign a variable within its parameters...</em>
+<span class="alt-text">
+def add(x, y):
+    return x + y
+def execFunc(func, x, y):
+    return func(x, y)
+result = execFunc(add, 5, 3) #Outputs 8</span>
+
+here, you can also produce the same functionality without doing anything special.
+Think of function parameters like contiguous blocks of memory that you access.
+You can embed these concepts within each other (as well as return an anonymous function (lambda))
+as this is the main idea behind python, it makes functions have "composability", such as passing
+a function as a parameter or assigning it to another function... It then further consolidates when
+you assign it and pass in a value. if you are someone who's against these implicit, non-obvious things,
+python allows some forms of explicitness.
+
+  &#183 `:` after a variable to annotate type
+  &#183 `:` also represents the end of a `func(var:type):`
+  &#183 You use `func(var)-&gt;type:` to specify return type
+  &#183 arrays start at 0, per usual
+  &#183 nd u have 'slices', and 'range' specification e.g. `1:4:2`, <em>or start at 1, stop at 4, and step through every 2 elements</em>
+
+<b>more implicit</b>
+
+  &#183 the assignment expression operator `:=` allows you to assign values to variables as yet another consolidated form of expression.
+    You have to wrap the expression within `()` brace delimeters as well
+  &#183 by simply using (e.g. comparison operators) python infers a boolean output
+  &#183 For loops let you specify names you havent even declared, i.e. `NameKey:NamePair` format i explained
+
+<b>For loops in python are just statements, and these statements can iterate over another sequence or statement</b>
+<span class="alt-text">
+  def gen_num():
+    for i in range(5):
+      yield i
+  for number in gen_num():
+      print(number)</span>
+
+If you dont include `yield`, then you cant specify the variable from the function you want to use
+<span class="alt-text">
+  def countdown(start):
+      while start &gt; 0:
+          yield start
+          start -= 1</span>
+
+In this e.g. `countdown` is a generator function that takes a `start` parameter. Inside the function,
+there's a while loop that continues as long as `start` is greater than 0. Within each iteration of the loop,
+it yields the current value of `start` and decrements it by `start-1`
+You can use this generator function w/ `next()`
+<span class="alt-text">
+  gen = countdown(5)
+  print(next(gen))    #Outputs 5
+  print(next(gen))    #Outputs 4</span>
+
+And it saves you from having to recall `gen = countdown(...)`
+
+Theres a few other things that involve arrays and iteration in python, however theres another thing called
+Generator Expressions (Comprehension), that is to say you can have set comprehension for e.g.
+<span class="alt-text">
+  function = {num**2 for num in range(5)}</span>
+
+<em>Which is equivalent to if you were finding the square for the index (num) inside the loop every iteration</em>
+Notice whole expressions that use comprehension go inside the delimeter tokens (e.g. curly-braces)
+
+There's a technical fact about the asterisk   `**`  is the n^2, squaring operator. But you might also see
+`*` or `**kwargs` <em>(variadic parameters)</em> before args to indicate that there is "other" parameters,
+however the double asterisk is only for dictionaries... It can also be used IN PLACE OF a parameter,
+which represents that every argument after it is "ordered, and explicitly named" in its use;
+Like, a technical indicator. </em>(same is the case for `/` which specifies the parameters before)</em>
+Pointers in python arent a thing.
+
+`range(5)` is equivalent to, n &lt; 5, and it starts at 0 by default, or you could have also specified the
+start e.g. 1 in the loop `range(1,5)`
+
+Theres a few methods/functions for string manipulation in python, but the underlying mechanism remains the same;
+strings are sequences of characters, each character has an index (position) within the string, and each character
+is represented by an underlying, numerical ASCII value
+
+You dont have structs in python, but you do have classes which could be considered the equivalent...
+You designate a private class `__name` w/ two underscores, and you can gain access to whatever it is
+associated w/, through a public (no underscores) class, that returns the same argument.
+It is also recommended by python to use a getter method associated w/ private/public.
+</em>This is also where `@property` decorator comes into play</em>
+
+<em>You might also see `_` underscore used as a placeholder/disposable.</em><h3><u>Python Arra</u>ys</h3>  &#183 brackets `[]` refer to a `list`
+  &#183 curly-braces `{}` refer to either a `dictionary`, a `set` or a `frozenset`...
+  &#183 braces `()` refer to a `tuple`
+
+<b>Mutability &amp; Order</b>
+
+  &#183 <em>mutable</em> arrays can be changed, and <em>immutable</em> arrays cannot be.
+  &#183 <em>order</em> refers to the sequence of elements within data structures. so an unordered array will presumably be "out of order" during operations
+
+<b>Ordered arrays</b> <em>(as of python 3.7 for dictionaries)</em>
+
+  <span class="alt-text">  list = ["mutable", "elements"]</span>
+  <span class="alt-text">  dict = {'mutable_key': 'mutable_val'}</span>
+  <span class="alt-text">  tuple = ("immutable", "elements")</span>
+
+<b>Unordered arrays</b>
+
+  <span class="alt-text">  set = {"mutable", "elements"}</span>
+  <span class="alt-text">  frozenset = {"immutable", "elements"}</span>
+
+<b>In summary</b>
+- I portrayed arrays in this way only to demonstrate what the syntax might look like, there isnt a prejudice on what element/type you fill it w/
+
+<b>Rememberance</b>
+- `list` look the most like a regular array to me, so its probably better to think of lists first, <em>"arrlist"</em>
+- `dictionary` <em>{'a collection/interpolation of key values'}</em> i call it a <em>"KeyPair Set"</em> 🗝️📙
+- `tuple` <em>("immutable")</em> you could think of a tuple as a regular function, in array form (3rd evolution),
+  more over, a tuple just means a finite sequence/ordered list of numbers.
+
+<b>Purpose</b>
+- Use a `list` when you want an ordered collection of elements. Use a `set` if the order doesnt matter and
+each element is unique in some other regard. Sets can be associated with the `union()` method
+
+<b>More behavior</b>
+- And you can have multiple items within an element e.g. `[3.14, {item1, item2}]` ... is a set within a list and that set has two items
+
+<b>Comments</b>
+- Python will accept single or double quotes for key-value pairs, and the same for strings i presume... <em>its a common unix trait</em>
+Hash `#` denotes a comment, and you can use `"""` triple quotes around internal comments, which is the convention for <em>`docstrings`</em>. see <em>`f'strings`</em>
+
+<b>Other Types</b>
+- `bytearray` is a smaller type of list. `bytes` represents an immutable sequence of bytes. `bool`, `int`, `complex` and `str` are also all immutable types
+
+<b>To solidify this understanding now, look at how a linear function is implemented</b>
+<span class="alt-text">
+  def linear_function(x):
+      m = 1  # Slope
+      b = 0  # Y-intercept
+      return m * x + b
+  x1 = 0
+  x2 = 10</span>
+
+<em>Find points between x1 and x2...</em>
+<span class="alt-text">
+  x_values = range(x1, x2 + 1)
+  points = [(x, linear_function(x)) for x in x_values]</span>
+
+Theres a couple different things about python functions, and that is if you only specify one/two variables in the parameter,
+it will just assume the rest, for example `range` takes three parameters, but you can just give it the stop variable (others optional)
+`x` and `y` coordinates are being specified within the tuple `(x, linear_function(x))`, and we're iterating `x2`, and the Y-intersect
+starts at 0 and increases by `x2` every iteration. `x` starts at 1, but increases by `x2`. This represents a simple line segment for y=mx+b,
+and conceivably, you can change those values.
+
+  <b>m = ∆y/∆x</b>
+
+So, for a line where (m = 1), this means that for every 1 unit increase in `x` (horizontal movement), `y` also increases by 1 unit (vertical movement).
+This creates a situation where the line rises at an angle where the vertical and horizontal movements are equal in length, forming a 45-degree angle with the x-axis...
+
+  <b>tan(I) = opposite/adjacent</b>
+  <b>tan(I) = ∆y/∆x = 1</b>
+
+<em>nevermind the math, i just wanted to throw that in</em>
+
+<b>Example2:</b> Consider a function `doclip`, which has this argument; `for i in range(3, len):` ... and we're iterating over the arrays
+`L` and `R` starting from index 3, up until (len - 1) </em>(A technical fact about `range`, is that it goes up to (but not including) length  - 1)</em>
+
+But lets also look at the linear interpolation part
+<span class="alt-text">
+  out[i] = L[i] + (f * ((R[i] - L[i]) &gt;&gt; HH_P))</span>
+
+It calculates a linear interpolation between the corresponding elements of `L` and `R`. The result is stored in the `out` array
+at the same index `i`. This operation is part of the clipping process for coordinates other than `x`, `y`, and `z`
+
+After the loop, there is a separate operation
+<span class="alt-text">
+  out[2] = L[2] + (fhp * (R[2] - L[2]) &gt;&gt; 15)</span>
+
+This specifically handles the z-coordinate with extra precision. It performs a similar linear interpolation between the
+z-coordinates of `L` and `R` and stores the result in the `out` array at index 2
+
+There was something way back i was interested in, in math, which had to do with odd/even. That could be interesting if
+you think about it since it spans the entirety of every 2 numbers, you can conceivably do any kindve operation at any distance.
+You can use the modulo operator to do operations on odds, perhaps we'll use it in the context of python: <em>% = mod operator</em>
+<span class="alt-text">
+  sequence = [1,2,3,4,5,6,7,8]
+  oddElements = [x for x in sequence if x % 2 != 0]
+  print(oddElements)</span>
+
+This was another example how python lets you use conditions within another condition, as well as during assignment.
+And if you dont understand the modulo operator, here's a better demonstration </em>[ex. 14 mod5]</em>
+
+  5 goes into 14, (2*)
+  2 * 5 = 10
+  14 - 10 = 4
+
+Here's another example <em>[ex. 3 mod6]</em>
+
+  6 goes into 3, (0*)
+  0 * 6 = 0
+  3 - 0 = 3
+
+<em>Theres documentation online and on the command line called `pydoc`, for example you can look up individual things
+e.g. `pydoc enumerate`, enumerate is a function thats logically similar to accessing the size of an array w/ `sizeof(array)`
+in C, except `enumerate` has two parameters, one for the `index`'s size, and one for its `value`.
+By that same token, `len(a)` can be used to get the length of objects and arrays</em>
+
+- As we said, in python you dont declare things. It minimizes the use of unnecessary variables, especially uninitialized ones,
+  contributing to cleaner, more efficient code. Managing memory efficiently is partly about avoiding the creation of variables
+  that aren't needed, or that hold large objects for longer than necessary. There's automatic memory management and garbage
+  collection by default, that help by deallocating objects that are no longer in use. However some common good practices include:
+- Initializing variables with meaningful values as soon as possible.
+- Keeping the scope of variables as small as necessary.
+- Deleting or delinking variables that hold large data and are no longer needed using `del` statement
+  or simply by ensuring they fall out of scope
+
+We've probably looked at For loops a billion*times, nevertheless lets look at one again to fully understand
+both a For loop, and how its more efficient w/ `yield`; First, using a non-yielding example:
+<span class="alt-text">
+  def fibonacci(n):
+      sequence = []
+      a, b = 0, 1
+      for _ in range(n):
+          sequence.append(a)
+          a, b = b, a + b
+      return sequence
+  result = fibonacci(8)</span>
+
+(`_`) Underscore informs the loop that we dont want to use a loop variable in the loop body. `range`, means
+we are iterating `n` amount of times (`n` elements). `append` appends the 'current' value `a` to the sequence.
+`a, b = b, a + b` ("sequence unpacking", technical term) its really just doing regular assignment...
+it only looks strange cause python lets you do arithmetic during assignment - in short, `a` takes the value of
+the previous `b`, and `b` takes the sum of the previous values of `a` and `b` (it sounds way more complicated
+explained like that, but its just regular assignment that goes through iteration)
+Then we assign/create the list all at once.
+
+Its preferred to use a generator w/ `yield`  in the case of iterating over a large amount of data,
+or data you dont need "all at once"
+<span class="alt-text">
+  def fibonacci(n):
+      a, b = 0, 1
+      for _ in range(n):
+          yield a
+          a, b = b, a + b
+  result = list(fibonacci(8))</span>
+
+We get the current fibonacci number and pause anytime we encounter `yield`, until the next iteration: `a, b = b, a + b`
+When we call &amp; convert  `fibonacci` to a `list` array, it consumes and collects all the values generated
+by the `yield` statement. The program has encountered the value we want for `range`,
+so we can return to `yield` and properly iterate through.
+<span class="alt-text">
+  my_list = ['element1', 'element2', 'element3']
+  for index, item in enumerate(my_list):
+      print(index, item)</span>
+
+I just want to recap; functions in python encapsulate arrays, and we explained how `enumerate` works, but
+lets look at another example that involves iterating over a <em>class</em>.
+<b>youll notice, python lets you inherit `.objects` from <u>EVERYTHING</u>, literally</b>
+<span class="alt-text">
+  class NameClass:
+      def __init__(self, data):
+          self.data = data
+          self.index = 0
+
+      def __iter__(self):
+          return self
+
+      def __next__(self):
+          if self.index &gt;= len(self.data):
+              raise StopIteration
+          value = self.data[self.index]
+          self.index += 1
+          return value
+
+  function = NameClass(['element1', 'element2', 'element3'])
+  for item in function:
+      print(item)</span>
+
+- A function that takes two parameters, `self` (which refers to the instance of the class) and `data`
+  (which is the list we want to iterate over).
+- Assign `self.data`, so that it can be accessed throughout the class. We initialize `index` to keep
+  track of the current position in the list `data`.
+- `__iter__` is used in a loop. It returns an iterator object, in this case, it returns `self`.
+- Every time the next element is needed in the iteration, i.e. `__next__`.
+- If the index is greater than or equal to the length of the data list. If it is, it means we've
+  reached the end of the list, so we raise a `StopIteration` exception to signal the end of iteration.
+- `value = self.data[self.index]`, retrieve's the value at the current index from the `data` list.
+- Then, increment the index so that the next time `__next__` is called, it will retrieve the next
+  element in the list.
+- Finally, we return the value retrieved from the list. Then after we assign `function`, we iterate
+  over the list and print each item. This demonstrates both iteration within a class, assigning a function
+  to a class and the encapsulation of functions/classes.
+
+Lets look at one more example just to demonstrate the versatility of types and classes...
+We briefly mentioned how `func(var:type)` lets you annotate a type of some variable,
+and we might of seen how we assign functions, but look at how we assign a dictionary:
+<span class="alt-text">
+  class Counter:
+      def __init__(self, iterable=None):
+          self.data = {}
+          if iterable:
+              self.update(iterable)
+    
+      def update(self, iterable):
+          for item in iterable:
+              self.data[item] = self.data.get(item, 0) + 1
+    
+      def __getitem__(self, item):
+          return self.data.get(item, 0)</span>
+
+- In short, we are initializing a variable to an empty dictionary, which  allows you
+  to store elements inside said variable thats now associated w/ the dictionary.
+- Then in the update method, the `iterable` argument represents a collection of elements
+  that you want to count. The For loop iterates over each element (item) in the iterable.
+- For each item, the method updates the count in the dictionary `self.data`.
+  `self.data[item]` accesses the value (count) associated with the current item.
+  `self.data.get(item, 0)` returns the current count of item, or 0 if item is
+  not already in `self.data`, <em>notice we are storing an element (`item`)
+  inside said variable which is now associated w/ said dictionary, and we
+  made it w/ an "arrlist".</em> `self.data[item] = self.data.get(item, 0) + 1`
+  increments the count of item by 1 and updates it in the dictionary, and
+  we are using it as a regular function to specify each argument.
+
+Now using this function, we would do something like the following
+<span class="alt-text">
+  def display_rate(counter: Counter[str]) -> None:</span>
+
+This demonstrates the versatility of classes, as well as how a function can be a type
+of any array, by which you can associate the `[]` arrlist w/ subsequent array type.
+
+Congratulations, you've now learned the green eggs, and ham as well as all 500 array and iteration methods in python.
+Just practice those examples over and over and youll have memorized how python works, everything else is practically C.
+</a></body></html>
