@@ -42,6 +42,12 @@ w/ that said its a common convention to use (4x) spaces. Indentation is essentia
 
 You can think of python like your trying to create functions inside `main.c`,
 where you call them at the end (`int main`), thats reminiscent to a python script
+<span class="alt-text">
+  def sum(iterable, start=0):
+      total = start
+      for item in iterable:
+          total += item
+      return total</span>
 
 <b>For loops can have a `key:value` type format</b>
 Once you understand the format of For loops, you'll have 50% of the battle cleared
@@ -263,9 +269,9 @@ Here's another example <em>[ex. 3 mod6]</em>
   3 - 0 = 3
 
 <em>Theres documentation online and on the command line called `pydoc`, for example you can look up individual things
-e.g. `pydoc enumerate`, enumerate is a function thats logically similar to accessing the size of an array w/ `sizeof(array)`
-in C, except `enumerate` has two parameters, one for the `index`'s size, and one for its `value`.
-By that same token, `len(a)` can be used to get the length of objects and arrays</em>
+e.g. `pydoc enumerate`, enumerate is a function that takes two parameters, one for the `index`'s size, and one for its `value`.
+By that same token, `len(a)` is logically similar to accessing the size of an array w/ `sizeof(array)`
+in C, as it is used to get the length of objects and arrays</em>
 
 - As we said, in python you dont declare things. It minimizes the use of unnecessary variables, especially uninitialized ones,
   contributing to cleaner, more efficient code. Managing memory efficiently is partly about avoiding the creation of variables
