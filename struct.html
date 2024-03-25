@@ -12,8 +12,8 @@ structures are a contiguous block of memory and
 the fields (members) are accessed using offsets
 <span class="alt-text">
   |   x   |   y   |
-  ----------
-  |   10  |   20  |</span>
+  ---------
+  |   0   |   4   |</span>
 
 x is at offset 0 within the struct
 y is at offset `sizeof(int)` bytes within the struct
@@ -31,7 +31,7 @@ using a struct within a function might look like
   void function(){
     struct example newname;
     struct example *something = &amp;newname;
-  }<span>
+  }</span>
 
 you can then declare a variable (newname) in this case
 that points to x or y in the original struct, and same for
