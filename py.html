@@ -6,7 +6,7 @@
 <title>Would you eat them in a box?</title>
 <meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
 <link rel="stylesheet" href="style.css"></head><body>
-<h3><u>Warning</u>! Learn C before you learn python, or it will be difficult to understand why anything is the way it is</h3><b>This is the green eggs &amp; ham that make up pythons indigestible layer.
+<h3><u>Warning</u>! Learn C before you learn python</h3><b>This is the green eggs &amp; ham that make up pythons indigestible layer.
 <em>note: add dr.suess images to illustrate the loopiness caused by the equality of identifiers</em></b>
 
   &#183 A value passed, always starts from the last (or sum)
@@ -21,7 +21,7 @@
 
   <em>..if that doesnt make sense, humour me</em>
 
- First off, C and Python are fundamentally different
+ C and Python (although similar in ways) are fundamentally different
 <span class="alt-text">
   def foo(p):
       print(p)
@@ -273,15 +273,6 @@ e.g. `pydoc enumerate`, enumerate is a function that takes two parameters, one f
 By that same token, `len(a)` is logically similar to accessing the size of an array w/ `sizeof(array)`
 in C, as it is used to get the length of objects and arrays</em>
 
-- As we said, in python you dont declare things. It minimizes the use of unnecessary variables, especially uninitialized ones,
-  contributing to cleaner, more efficient code. Managing memory efficiently is partly about avoiding the creation of variables
-  that aren't needed, or that hold large objects for longer than necessary. There's automatic memory management and garbage
-  collection by default, that help by deallocating objects that are no longer in use. However some common good practices include:
-- Initializing variables with meaningful values as soon as possible.
-- Keeping the scope of variables as small as necessary.
-- Deleting or delinking variables that hold large data and are no longer needed using `del` statement
-  or simply by ensuring they fall out of scope
-
 We've probably looked at For loops a billion*times, nevertheless lets look at one again to fully understand
 both a For loop, and how its more efficient w/ `yield`; First, using a non-yielding example:
 <span class="alt-text">
@@ -345,9 +336,9 @@ lets look at another example that involves iterating over a <em>class</em>.
       print(item)</span>
 
 - A function that takes two parameters, `self` (which refers to the instance of the class) and `data`
-  (which is the list we want to iterate over).
+  (which is the list we want to iterate over)
 - Assign `self.data`, so that it can be accessed throughout the class. We initialize `index` to keep
-  track of the current position in the list `data`.
+  track of the current position in the list `data`
 - `__iter__` is used in a loop. It returns an iterator object, in this case, it returns `self`.
 - Every time the next element is needed in the iteration, i.e. `__next__`.
 - If the index is greater than or equal to the length of the data list. If it is, it means we've
@@ -397,10 +388,8 @@ This demonstrates the versatility of classes, as well as how a function can be a
 of any array, by which you can associate the `[]` arrlist w/ subsequent array type.
 
 Congratulations, you've now learned the green eggs and ham, as well as all 500 array and iteration methods in python.
-Just practice those examples over and over and youll have memorized how python works, everything else is practically C.
-
-<em>Quick Note: C-Extended Python (Cython)</em>
-Cython offers a significant performance increase to python through an interface that uses "C-Extensions".
+Just practice those examples over and over and youll have memorized how python works. You might also consider trying
+C-Extended Python or (Cython) which has a better runtime performance by adding an extra step of compilation.
 It translates python into C, which can then be compiled into native machine code, and this could be
 particularly beneficial while working w/ large projects remotely in my opinion.
 The syntax fuses together C &amp; Python... which might even make it easier to
