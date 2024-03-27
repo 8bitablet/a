@@ -1,0 +1,60 @@
+<!-- binary bitwise -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NOR's Adventure</title>
+<meta content="width=device-width,initial-scale=1,user-scalable=no" name=viewport>
+<link rel="stylesheet" href="style.css"></head><body>
+        UNARY NOT             OR                    AND                       NOR                   NAND                 XOR               
+        ~0 = 1              0 | 0 = 0             0 &amp; 0 = 0             0 + 0 = 1             0 + 0 = 1            0 ^ 0 = 0           
+        ~1 = 0              0 | 1 = 1             0 &amp; 1 = 0             0 + 1 = 0             0 + 1 = 1            0 ^ 1 = 1           
+                            1 | 0 = 1             1 &amp; 0 = 0             1 + 0 = 0             1 + 0 = 1            1 ^ 0 = 1           
+                            1 | 1 = 1             1 &amp; 1 = 1             1 + 1 = 0             1 + 1 = 0            1 ^ 1 = 0           
+        flip row           (OR) all on           (AND) all off            (NOR) all off          (NAND) all on        (XOR) opposing       
+        of bits(NOT)     (unless already off)   (unless already on)      (unless already off)   (unless already off)  bits on, same bits off
+        I wrote a poem, "NOR's Adventure", to remember binary bitwise operators..
+        <a href="https://imgur.com/qZCiyeI"><img src="https://i.imgur.com/qZCiyeI.png" title="nors_adventure" /></a>
+        " Unary <b>NOT</b> flips a row of bits
+        Unless they're already off, which
+        <b>OR</b> would insist...  That they all turn 'on', so good for him..
+        "<b>AND</b>"ing cuts the power, unless the power's in each bin.
+        And bins are made to break, therefore
+        <b>NOR</b> ensures a state.. that each bit turn off unless
+        they're off which he awakes (on)..
+        <b>XOR</b> goes cross-eyed, and makes his conditient,
+        that everything similar turn off unless they're precisely different.
+        indifferently, NOR turns off+off back on and feels ashame,
+        </b>NAND</b> turns all on if they're all -
+        not fully powered a'gain (yay!) "
+        
+        next lets demonstrate computing an expression A'*B'+B*C:
+        
+                   A: -----.
+                   B: ---. |
+                   C: -. | |
+                         | | `-&lt;o-|&amp;&amp;--.
+                         | }---&lt;o-|&amp;&amp;  `-|OR
+                         | |          ,--|OR----A'*B'+B*C
+                         | `------|&amp;&amp;-'
+                         `--------|&amp;&amp;
+        
+        A′ represents the negation (NOT) of A.
+        B′B′ represents the negation (NOT) of B.
+        A′⋅B′A′⋅B′ represents the logical AND of the negation of A and the negation of B.
+        B⋅CB⋅C represents the logical AND of B and C.
+        The final result is the logical OR of A′⋅B′A′⋅B′ and B⋅CB⋅C
+        
+        
+        simulate NOR behavior: (~) NOT'ing the result of (|) OR
+        
+                    A: -----.
+                    B: ---. |
+                          | |
+                          | | `-&lt;o-|OR--.
+                          | }---&lt;o-|OR  `-|NOT
+                          | |      `------|NOT----A NOR B
+                          | `------|NOT
+                          `--------|OR
+
+</body></html>
