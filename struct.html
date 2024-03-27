@@ -11,9 +11,7 @@
 structures are a contiguous block of memory and
 the fields (members) are accessed using offsets
 <span class="alt-text">
-  |   x   |   y   |
-  ---------
-  |   0   |   4   |</span>
+  |   x   |   y   |</span>
 
 x is at offset 0 within the struct
 y is at offset `sizeof(int)` bytes within the struct
@@ -35,11 +33,12 @@ using a struct within a function might look like
 
 you can then declare a variable (newname) in this case
 that points to x or y in the original struct, and same for
-(something), which it now equals the address of member
+(something), which it now equals the address of member.
 
-anyway, when you see this `Object.Member, its referred to as a Member that is
+when you see this `Object.Member, its referred to as a Member that is
 being accessed through the pointer to Object... you use the dot when there's
-direct access, and the (-&gt;) arrow operator when its indirect...
+direct access, and the (-&gt;) arrow operator when its indirect (i.e. when it's
+being accessed from a pointer already...
 `newname.x` could be declared w/ direct access
 `something-&gt;x` would have indirect access, seeing
 as its two levels away from `example`
